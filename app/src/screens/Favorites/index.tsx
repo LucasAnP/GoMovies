@@ -1,9 +1,9 @@
 import { Text, View } from 'react-native';
 
-export function Movies() {
+export function Favorites() {
   return (
     <View>
-      <Text>Movies</Text>
+      <Text>Favorites</Text>
     </View>
   );
 }

@@ -1,5 +1,10 @@
-import { Movies } from "@screens/Movies";
+import { NavigationContainer } from '@react-navigation/native';
+import { AppRoutes } from '@routes/app.routes';
 
 export default function App() {
-  return <Movies />;
+  return (
+    <NavigationContainer>
+      <AppRoutes />
+    </NavigationContainer>
+  );
 }

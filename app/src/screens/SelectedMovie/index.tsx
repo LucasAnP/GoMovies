@@ -1,9 +1,9 @@
 import { Text, View } from 'react-native';
 
-export function Movies() {
+export function SelectedMovie() {
   return (
     <View>
-      <Text>Movies</Text>
+      <Text>SelectedMovie</Text>
     </View>
   );
 }
