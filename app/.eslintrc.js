@@ -43,18 +43,23 @@ module.exports = {
     'react/prop-types': 'off',
     'react/react-in-jsx-scope': 'off',
     'import-helpers/order-imports': [
-      // '/^react$/',
       'warn',
       {
         newlinesBetween: 'always',
         groups: [
-          '/^react$/',
+          ['/^react$/', '/^react-native$/', '/^axios$/'],
           'module',
-          '/^@shared/',
-          ['parent', 'sibling', 'index'],
+          '/^@shared$/',
+          [
+            '/^@services$/',
+            '/^@storage$/',
+            '/^@routes$/',
+            '/^@theme$/',
+            '/^@screens$/',
+          ],
           '/./styles/',
         ],
-        alphabetize: { order: 'asc', ignoreCase: true },
+        alphabetize: { ignoreCase: true },
       },
     ],
   },
