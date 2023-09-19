@@ -35,7 +35,11 @@ export function AppRoutes() {
         component={Movies}
         options={{
           tabBarIcon: () => (
-            <Queue color={theme.colors.red[400]} weight="fill" size={32} />
+            <Queue
+              color={theme.colors.red[400]}
+              weight="fill"
+              size={theme.sizes.large}
+            />
           ),
         }}
       />
@@ -43,7 +47,13 @@ export function AppRoutes() {
         name={Route.FAVORITES}
         component={Favorites}
         options={{
-          tabBarIcon: () => <Star color="#ff5757" weight="fill" size={32} />,
+          tabBarIcon: () => (
+            <Star
+              color={theme.colors.red[400]}
+              weight="fill"
+              size={theme.sizes.large}
+            />
+          ),
         }}
       />
       <Tab.Screen

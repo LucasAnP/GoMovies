@@ -1,3 +1,5 @@
+import { RFValue } from 'react-native-responsive-fontsize';
+
 export default {
   colors: {
     gray: {
@@ -16,10 +18,60 @@ export default {
     },
   },
   fontSizes: {
+    /** 12 */
     xs: 12,
+    /** 14 */
     sm: 14,
+    /** 16 */
     md: 16,
+    /** 18 */
     lg: 18,
+    /** 20 */
     xl: 20,
+  },
+  sizes: {
+    zero: RFValue(0),
+
+    /** 1 */
+    min: RFValue(1),
+
+    /** 4 */
+    smallest: RFValue(4),
+
+    /** 8 */
+    small: RFValue(8),
+
+    /** 10 */
+    xsmall: RFValue(10),
+
+    /** 12 */
+    regular: RFValue(12),
+
+    /** 14 */
+    xRegular: RFValue(14),
+
+    /** 16 */
+    medium: RFValue(16),
+
+    /** 20 */
+    xMedium: RFValue(20),
+
+    /** 24 */
+    large: RFValue(24),
+
+    /** 32 */
+    xLarge: RFValue(32),
+
+    /** 40 */
+    xmLarge: RFValue(40),
+
+    /** 48 */
+    xxLarge: RFValue(48),
+
+    /** 56 */
+    xxxLarge: RFValue(56),
+
+    /** 64 */
+    largest: RFValue(64),
   },
 };

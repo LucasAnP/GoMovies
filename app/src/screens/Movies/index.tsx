@@ -1,9 +1,11 @@
-import { Text, View } from 'react-native';
+import { Text } from 'react-native';
+
+import { Container } from './styles';
 
 export function Movies() {
   return (
-    <View>
+    <Container>
       <Text>Movies</Text>
-    </View>
+    </Container>
   );
 }
