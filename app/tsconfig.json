@@ -3,7 +3,7 @@
   "compilerOptions": {
     "strict": true,
     "baseUrl": "./",
-    "typeRoots": ["./src/modules"],
+    "typeRoots": ["./src/@types"],
     "paths": {
       "@assets/*":["./src/assets/*"],
       "@components/*":["./src/components/*"],
@@ -13,6 +13,7 @@
       "@theme/*":["./src/theme/*"],
       "@utils/*":["./src/utils/*"],
       "@services/*":["./src/services/*"],
+      "@dtos/*":["./src/dtos/*"],
     }
   }
 }
