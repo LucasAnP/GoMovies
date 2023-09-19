@@ -9,9 +9,9 @@ import { SelectedMovie } from '@screens/SelectedMovie';
 import Route from './enums';
 
 type AppRoutes = {
-  movies: undefined;
-  favorites: undefined;
-  selectedMovie: undefined;
+  Movies: undefined;
+  Favorites: undefined;
+  SelectedMovie: undefined;
 };
 
 export type AppNavigatorRoutesProps = BottomTabNavigationProp<AppRoutes>;
