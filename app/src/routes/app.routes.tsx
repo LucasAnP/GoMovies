@@ -2,6 +2,7 @@ import {
   BottomTabNavigationProp,
   createBottomTabNavigator,
 } from '@react-navigation/bottom-tabs';
+import { View } from 'react-native';
 import { Queue, Star } from 'phosphor-react-native';
 
 import { useTheme } from 'styled-components/native';
@@ -28,39 +29,41 @@ export function AppRoutes() {
   const theme = useTheme();
 
   return (
-    <Tab.Navigator
-      screenOptions={{
-        headerShown: false,
-        tabBarShowLabel: false,
-      }}
-    >
-      <Tab.Screen
-        name={Route.MOVIES}
-        component={Movies}
-        options={{
-          tabBarIcon: ({ color }) => (
-            <Queue color={color} weight="fill" size={theme.sizes.large} />
-          ),
-          tabBarInactiveTintColor: theme.colors.gray[200],
-          tabBarActiveTintColor: theme.colors.red[400],
+    <View style={{ flex: 1, backgroundColor: theme.colors.gray[700] }}>
+      <Tab.Navigator
+        screenOptions={{
+          headerShown: false,
+          tabBarShowLabel: false,
         }}
-      />
-      <Tab.Screen
-        name={Route.FAVORITES}
-        component={Favorites}
-        options={{
-          tabBarIcon: ({ color }) => (
-            <Star color={color} weight="fill" size={theme.sizes.large} />
-          ),
-          tabBarInactiveTintColor: theme.colors.gray[200],
-          tabBarActiveTintColor: theme.colors.red[400],
-        }}
-      />
-      <Tab.Screen
-        name={Route.SELECTED_MOVIE}
-        component={SelectedMovie}
-        options={{ tabBarButton: () => null }}
-      />
-    </Tab.Navigator>
+      >
+        <Tab.Screen
+          name={Route.MOVIES}
+          component={Movies}
+          options={{
+            tabBarIcon: ({ color }) => (
+              <Queue color={color} weight="fill" size={theme.sizes.large} />
+            ),
+            tabBarInactiveTintColor: theme.colors.gray[200],
+            tabBarActiveTintColor: theme.colors.red[400],
+          }}
+        />
+        <Tab.Screen
+          name={Route.FAVORITES}
+          component={Favorites}
+          options={{
+            tabBarIcon: ({ color }) => (
+              <Star color={color} weight="fill" size={theme.sizes.large} />
+            ),
+            tabBarInactiveTintColor: theme.colors.gray[200],
+            tabBarActiveTintColor: theme.colors.red[400],
+          }}
+        />
+        <Tab.Screen
+          name={Route.SELECTED_MOVIE}
+          component={SelectedMovie}
+          options={{ tabBarButton: () => null }}
+        />
+      </Tab.Navigator>
+    </View>
   );
 }

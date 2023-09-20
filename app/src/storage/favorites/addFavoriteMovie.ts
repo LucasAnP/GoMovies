@@ -15,7 +15,7 @@ export async function addFavoriteMovie(movie: MovieDTO) {
     );
 
     if (moviesAlreadyAdded.length > 0) {
-      throw new AppError('This movie already was favorited');
+      throw new AppError('This movie was already favorited');
     }
 
     const storage = JSON.stringify([...storedMovies, movie]);
