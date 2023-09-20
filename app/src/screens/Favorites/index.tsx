@@ -14,6 +14,8 @@ import Route from '@routes/enums';
 
 import {
   Container,
+  EmptyListContainer,
+  EmptyListTitle,
   Image,
   MovieCard,
   MovieInfo,
@@ -68,7 +70,20 @@ export function Favorites() {
           data={favoritedMovies}
           keyExtractor={(_, index) => index.toString()}
           showsVerticalScrollIndicator={false}
-          // TODO: useCallback
+          contentContainerStyle={
+            favoritedMovies?.length === 0 && {
+              flex: 1,
+              justifyContent: 'center',
+            }
+          }
+          ListEmptyComponent={() => (
+            <EmptyListContainer>
+              <EmptyListTitle>
+                There are no favorite movies.{'\n'}
+                Shall we bookmark any?
+              </EmptyListTitle>
+            </EmptyListContainer>
+          )}
           renderItem={({ item }) => (
             <SafeAreaView
               style={{ flex: 1, paddingBottom: 16 }}

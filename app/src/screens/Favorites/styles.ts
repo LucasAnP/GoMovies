@@ -18,6 +18,19 @@ export const Title = styled.Text`
   margin-bottom: 16px;
 `;
 
+export const EmptyListContainer = styled.View`
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const EmptyListTitle = styled.Text`
+  font-size: ${({ theme }) => theme.fontSizes.sm}px;
+  color: ${({ theme }) => theme.colors.gray[300]};
+
+  text-align: center;
+`;
+
 export const MovieCard = styled.TouchableOpacity`
   flex: 1;
 
