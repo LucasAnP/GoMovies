@@ -1,19 +1,32 @@
 import { useEffect, useState } from 'react';
-import { FlatList, Text } from 'react-native';
+import { FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { RFValue } from 'react-native-responsive-fontsize';
+import { CaretDown } from 'phosphor-react-native';
+
+import { useTheme } from 'styled-components/native';
 
 import { MovieDTO } from '@dtos/MovieDTO';
 import { api } from '@services/api';
 import { AppNavigationRoutesProps } from '@routes/app.routes';
 import Route from '@routes/enums';
 
-import { Container, Movie, Title } from './styles';
+import {
+  Container,
+  Image,
+  Movie,
+  MovieTitle,
+  MovieTitleContainer,
+  Title,
+} from './styles';
 
 export function Movies() {
   const [movies, setMovies] = useState<MovieDTO[]>([]);
   const [pagination, setPagination] = useState(1);
   const [refreshing, setRefreshing] = useState(false);
   const navigation = useNavigation<AppNavigationRoutesProps>();
+
+  const theme = useTheme();
 
   const getMovies = async (currentPagination: number) => {
     setPagination(currentPagination);
@@ -54,20 +67,40 @@ export function Movies() {
   return (
     <Container>
       <Title>Top Rated Movies</Title>
+      {/* TODO: Make the list with best performance */}
       <FlatList
         data={movies}
         keyExtractor={(_, index) => index.toString()}
         onEndReached={onEndReached}
         refreshing={refreshing}
         onRefresh={onRefresh}
+        showsVerticalScrollIndicator={false}
         renderItem={({ item }) => (
-          <Movie activeOpacity={0.7} onPress={() => onPressMovie(item.id)}>
+          <Movie activeOpacity={0.9} onPress={() => onPressMovie(item.id)}>
             {/* TODO: Make a animation do drop infos (show only image) */}
-            <Text>{item.title}</Text>
-            <Text>{item.overview}</Text>
-            <Text>{item.popularity}</Text>
-            <Text>{item.vote_average}</Text>
-            <Text>{item.vote_count}</Text>
+            <Image
+              source={{
+                uri: `https://image.tmdb.org/t/p/original/${item.poster_path}`,
+              }}
+              resizeMode="cover"
+              style={{
+                width: '100%',
+                height: undefined,
+                aspectRatio: 1,
+                alignSelf: 'center',
+              }}
+            />
+            <MovieTitleContainer activeOpacity={0.9}>
+              <MovieTitle>{item?.title}</MovieTitle>
+              <CaretDown
+                size={RFValue(theme.sizes.medium)}
+                color={theme.colors.white}
+              />
+            </MovieTitleContainer>
+            {/* <Text>{item.overview}</Text>
+          <Text>{item.popularity}</Text>
+          <Text>{item.vote_average}</Text>
+          <Text>{item.vote_count}</Text> */}
           </Movie>
         )}
       />
