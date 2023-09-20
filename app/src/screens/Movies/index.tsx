@@ -123,16 +123,3 @@ export function Movies() {
     </Container>
   );
 }
-{
-  /*
-            <MovieTitleContainer activeOpacity={0.9}>
-
-              <CaretDown
-                size={RFValue(theme.sizes.medium)}
-                color={theme.colors.white}
-              />
-            </MovieTitleContainer> */
-}
-{
-  /*  */
-}
