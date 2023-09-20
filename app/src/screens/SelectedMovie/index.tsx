@@ -43,7 +43,6 @@ export function SelectedMovie() {
       const response = await api.get<SelectedMovieDTO>(
         `/${id}?language=en-US&`,
       );
-      console.log('response', response.data);
       setMovieInfo(response.data);
     } catch (error) {
       console.warn(error);
@@ -61,6 +60,8 @@ export function SelectedMovie() {
     setMovieInfo(undefined);
     getSelectedMovieDetails();
   }, [id]);
+
+  // TODO: Have to create favorite component
 
   return (
     <>

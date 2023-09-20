@@ -33,7 +33,6 @@ export function Movies() {
   const theme = useTheme();
 
   const getMovies = async (currentPagination: number) => {
-    console.log('Inside', currentPagination);
     setPagination(currentPagination);
     try {
       const response = await api.get(
