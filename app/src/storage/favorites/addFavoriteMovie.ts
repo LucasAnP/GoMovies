@@ -1,27 +1,21 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { AppError } from '@utils/AppError';
-
 import { MovieDTO } from '@dtos/MovieDTO';
 
 import { FAVORITE_STORAGE } from '../storageConfig';
 import { getFavoritedMovies } from './getFavoritedMovies';
 
 export async function addFavoriteMovie(movie: MovieDTO) {
-  try {
-    const storedMovies = await getFavoritedMovies();
-    const moviesAlreadyAdded = storedMovies.filter(
-      (movie) => movie.id === movie.id,
-    );
+  const storedMovies = await getFavoritedMovies();
 
-    if (moviesAlreadyAdded.length > 0) {
-      throw new AppError('This movie was already favorited');
-    }
+  const moviesAlreadyAdded = storedMovies.filter(
+    (movieStored) => movieStored.id === movie.id,
+  );
 
-    const storage = JSON.stringify([...storedMovies, movie]);
-    await AsyncStorage.setItem(FAVORITE_STORAGE, storage);
-  } catch (error) {
-    console.warn(error);
-    throw error;
+  if (moviesAlreadyAdded.length > 0) {
+    throw new Error('This movie was already favorited');
   }
+
+  const storage = JSON.stringify([...storedMovies, movie]);
+  await AsyncStorage.setItem(FAVORITE_STORAGE, storage);
 }

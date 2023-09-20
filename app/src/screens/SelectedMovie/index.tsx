@@ -1,5 +1,10 @@
-import { useEffect, useState } from 'react';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useState, useCallback } from 'react';
+import { Alert } from 'react-native';
+import {
+  useFocusEffect,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ArrowLeft } from 'phosphor-react-native';
 
@@ -8,6 +13,8 @@ import { Loading } from '@components/Loading';
 import { api } from '@services/api';
 import { SelectedMovieDTO } from '@dtos/SelectedMovieDTO';
 import { AppNavigationRoutesProps } from '@routes/app.routes';
+import { addFavoriteMovie } from '@storage/favorites/addFavoriteMovie';
+import { MovieDTO } from '@dtos/MovieDTO';
 
 import {
   Container,
@@ -22,6 +29,7 @@ import {
   MovieTitle,
   Overview,
   ScrollView,
+  StarIcon,
 } from './styles';
 
 type SelectedMovieParams = {
@@ -31,6 +39,16 @@ type SelectedMovieParams = {
 export function SelectedMovie() {
   const [loading, setLoading] = useState(true);
   const [movieInfo, setMovieInfo] = useState<SelectedMovieDTO>();
+  const [favorited, setFavorited] = useState(false);
+  const movieInfoToFavorite = {
+    id: movieInfo?.id,
+    title: movieInfo?.title,
+    overview: movieInfo?.overview,
+    poster_path: movieInfo?.poster_path,
+    vote_average: movieInfo?.vote_average,
+    vote_count: movieInfo?.vote_count,
+    popularity: movieInfo?.popularity,
+  } as MovieDTO;
 
   const route = useRoute();
   const { id } = route.params as SelectedMovieParams;
@@ -56,10 +74,30 @@ export function SelectedMovie() {
     setMovieInfo(undefined);
   };
 
-  useEffect(() => {
-    setMovieInfo(undefined);
-    getSelectedMovieDetails();
-  }, [id]);
+  //TODO: check if movie is on favorites and make the star active
+
+  const favoriteMovie = async () => {
+    try {
+      await addFavoriteMovie(movieInfoToFavorite);
+    } catch (error) {
+      // TODO: fix type
+      Alert.alert('Unable to favorite', error.message);
+    }
+  };
+
+  const handleFavoriteMovie = () => {
+    setFavorited((prevState) => !prevState);
+    Alert.alert('Favorite', 'Are you sure to favorite this movie?', [
+      { text: 'no', style: 'cancel' },
+      { text: 'Yes', onPress: () => favoriteMovie() },
+    ]);
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      getSelectedMovieDetails();
+    }, [id]),
+  );
 
   // TODO: Have to create favorite component
 
@@ -78,8 +116,11 @@ export function SelectedMovie() {
             resizeMode="stretch"
           />
           <Header style={{ top: Math.max(insets.top, 16) }}>
-            <IconContainer onPress={onGoBack}>
-              <ArrowLeft color="white" size={20} />
+            <IconContainer onPress={onGoBack} activeOpacity={0.7}>
+              <ArrowLeft color="white" size={24} />
+            </IconContainer>
+            <IconContainer onPress={handleFavoriteMovie} activeOpacity={0.7}>
+              <StarIcon favorited={favorited} size={24} />
             </IconContainer>
           </Header>
 

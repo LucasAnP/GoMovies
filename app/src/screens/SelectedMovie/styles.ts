@@ -1,4 +1,10 @@
+import { Star } from 'phosphor-react-native';
+
 import styled from 'styled-components/native';
+
+type StarIconProps = {
+  favorited: boolean;
+};
 
 export const Container = styled.View`
   flex: 1;
@@ -24,8 +30,16 @@ export const Header = styled.View`
   align-items: center;
   justify-content: space-between;
 `;
+export const StarIcon = styled(Star).attrs<StarIconProps>(
+  ({ favorited, theme }) => ({
+    color: favorited ? 'yellow' : theme.colors.white,
+    weight: favorited ? 'fill' : 'bold',
+  }),
+)``;
 
-export const IconContainer = styled.Pressable``;
+export const IconContainer = styled.TouchableOpacity`
+  height: 100%;
+`;
 
 export const Image = styled.Image`
   width: '100%';

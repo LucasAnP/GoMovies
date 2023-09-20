@@ -8,4 +8,9 @@ export type SelectedMovieDTO = {
   }[];
   release_date: string;
   revenue: number;
+
+  id: number;
+  vote_average: number;
+  vote_count: number;
+  popularity: number;
 };
