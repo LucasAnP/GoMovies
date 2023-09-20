@@ -5,7 +5,7 @@ import styled from 'styled-components/native';
 export const Container = styled(SafeAreaView)`
   flex: 1;
   background-color: ${({ theme }) => theme.colors.gray[700]};
-  padding: 16px;
+  padding: 16px 16px 0;
 `;
 
 export const MoviesFlatList = styled.FlatList``;

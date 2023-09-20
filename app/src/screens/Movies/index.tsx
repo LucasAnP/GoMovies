@@ -83,7 +83,7 @@ export function Movies() {
         renderItem={({ item }) => (
           <SafeAreaView
             style={{ flex: 1, paddingBottom: 16 }}
-            edges={['right', 'bottom', 'left']}
+            edges={['right', 'left']}
           >
             <MovieCard
               activeOpacity={0.9}
