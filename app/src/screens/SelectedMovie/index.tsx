@@ -83,8 +83,11 @@ export function SelectedMovie() {
     try {
       dispatch(addFavoriteMovie(movieInfoToFavorite));
     } catch (error) {
-      // TODO: fix type
-      Alert.alert('Unable to favorite', error.message);
+      let errorMessage = 'Failed to favorite movie';
+      if (error instanceof Error) {
+        errorMessage = error.message;
+      }
+      Alert.alert('Unable to favorite', errorMessage);
     }
   };
 
