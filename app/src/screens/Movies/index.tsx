@@ -33,10 +33,11 @@ export function Movies() {
   const theme = useTheme();
 
   const getMovies = async (currentPagination: number) => {
+    console.log('Inside', currentPagination);
     setPagination(currentPagination);
     try {
       const response = await api.get(
-        `/top_rated?language=en-US$page=${pagination}`,
+        `/top_rated?language=en-US&page=${currentPagination}`,
       );
 
       if (currentPagination == 1) {
@@ -67,6 +68,8 @@ export function Movies() {
   useEffect(() => {
     getMovies(1);
   }, []);
+
+  // TODO: Fix movies pushing getMovies(1)result in concat
 
   return (
     <Container>
