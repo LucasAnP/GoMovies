@@ -5,6 +5,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { MovieDTO } from '@dtos/MovieDTO';
 import { getFavoritedMovies } from '@storage/favorites/getFavoritedMovies';
 import { storageFavoriteMovie } from '@storage/favorites/addFavoriteMovie';
+import { MovieStoragedDTO } from '@dtos/MovieStoragedDTO';
 
 export const fetchFavorites = createAsyncThunk(
   'movies/fetchFavorites',
@@ -25,18 +26,13 @@ export const addFavoriteMovie = createAsyncThunk(
     try {
       await storageFavoriteMovie(movie);
     } catch (error) {
-      // TODO: fix type
-      Alert.alert('Unable to favorite', error.message);
+      console.warn(error);
+      throw error;
     }
   },
 );
 
-type movieStateType = {
-  isLoading: boolean;
-  favoritedMovies: MovieDTO[];
-};
-
-const initialState: movieStateType = {
+const initialState: MovieStoragedDTO = {
   isLoading: false,
   favoritedMovies: [],
 };
@@ -63,6 +59,7 @@ const moviesSlice = createSlice({
       })
       .addCase(addFavoriteMovie.fulfilled, (state, action) => {
         state.isLoading = false;
+        // TODO: Adjust type error
         state.favoritedMovies = action.payload;
       })
       .addCase(addFavoriteMovie.rejected, (state) => {

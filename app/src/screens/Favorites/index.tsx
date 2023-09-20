@@ -2,7 +2,6 @@ import { useCallback } from 'react';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Star, ThumbsUp } from 'phosphor-react-native';
-import { useSelector } from 'react-redux';
 
 import { Loading } from '@components/Loading';
 import { useTheme } from 'styled-components/native';
@@ -26,7 +25,7 @@ import {
   VotesText,
 } from './styles';
 
-import { useAppDispatch } from '../../redux/store';
+import { useAppDispatch, useAppSelector } from '../../redux/store';
 import { fetchFavorites } from '../../redux/slices/moviesSlice';
 
 export function Favorites() {
@@ -34,7 +33,7 @@ export function Favorites() {
 
   const theme = useTheme();
 
-  const { favoritedMovies, isLoading } = useSelector((state) => {
+  const { favoritedMovies, isLoading } = useAppSelector((state) => {
     return state.movies;
   });
 

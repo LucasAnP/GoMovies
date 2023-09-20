@@ -79,7 +79,7 @@ export function SelectedMovie() {
 
   //TODO: check if movie is on favorites and make the star active
 
-  const favoriteMovie = async () => {
+  const favoriteMovie = () => {
     try {
       dispatch(addFavoriteMovie(movieInfoToFavorite));
     } catch (error) {
