@@ -1,8 +1,9 @@
-import { ActivityIndicator } from 'react-native';
 import { useEffect, useState } from 'react';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ArrowLeft } from 'phosphor-react-native';
+
+import { Loading } from '@components/Loading';
 
 import { api } from '@services/api';
 import { SelectedMovieDTO } from '@dtos/SelectedMovieDTO';
@@ -65,7 +66,7 @@ export function SelectedMovie() {
     <>
       {loading ? (
         <Container>
-          <ActivityIndicator />
+          <Loading />
         </Container>
       ) : (
         <ScrollView>
