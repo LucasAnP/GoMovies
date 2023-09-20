@@ -1,13 +1,12 @@
 import { useState, useCallback } from 'react';
-import { Alert } from 'react-native';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Star, ThumbsUp } from 'phosphor-react-native';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { Loading } from '@components/Loading';
 import { useTheme } from 'styled-components/native';
 
-import { getFavoritedMovies } from '@storage/favorites/getFavoritedMovies';
 import { MovieDTO } from '@dtos/MovieDTO';
 import { AppNavigationRoutesProps } from '@routes/app.routes';
 import Route from '@routes/enums';
@@ -28,26 +27,22 @@ import {
   VotesText,
 } from './styles';
 
+import { fetchFavorites } from '../../redux/slices/moviesSlice';
+
 export function Favorites() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [favoritedMovies, setFavoritedMovies] = useState<MovieDTO[]>();
+  // const [favoritedMovies, setFavoritedMovies] = useState<MovieDTO[]>();
 
   const theme = useTheme();
+  const { favoritedMovies, isLoading } = useSelector((state) => {
+    return state.movies;
+  });
+
+  const dispatch = useDispatch();
 
   const navigation = useNavigation<AppNavigationRoutesProps>();
 
-  const fetchFavorites = async () => {
-    try {
-      setIsLoading(true);
-
-      const favoritedMovies = await getFavoritedMovies();
-      setFavoritedMovies(favoritedMovies);
-    } catch (error) {
-      console.warn(error);
-      Alert.alert('Movies', 'Unable to load favorites.');
-    } finally {
-      setIsLoading(false);
-    }
+  const fetchFavoritesMovies = () => {
+    dispatch(fetchFavorites());
   };
 
   const onPressMovie = (movieId: number) => {
@@ -56,7 +51,7 @@ export function Favorites() {
 
   useFocusEffect(
     useCallback(() => {
-      fetchFavorites();
+      fetchFavoritesMovies();
     }, []),
   );
 
