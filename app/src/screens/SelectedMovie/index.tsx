@@ -70,7 +70,7 @@ export function SelectedMovie() {
   };
 
   const onGoBack = () => {
-    navigation.navigate('Movies');
+    navigation.goBack();
     setMovieInfo(undefined);
   };
 
