@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
-import { FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { RFValue } from 'react-native-responsive-fontsize';
-import { CaretDown } from 'phosphor-react-native';
+import { Star, ThumbsUp } from 'phosphor-react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useTheme } from 'styled-components/native';
 
@@ -14,10 +13,15 @@ import Route from '@routes/enums';
 import {
   Container,
   Image,
-  Movie,
+  MovieCard,
+  MovieInfo,
   MovieTitle,
-  MovieTitleContainer,
+  MoviesFlatList,
+  Overview,
+  PictureAndInfo,
   Title,
+  VotesContainer,
+  VotesText,
 } from './styles';
 
 export function Movies() {
@@ -68,42 +72,67 @@ export function Movies() {
     <Container>
       <Title>Top Rated Movies</Title>
       {/* TODO: Make the list with best performance */}
-      <FlatList
+      <MoviesFlatList
         data={movies}
         keyExtractor={(_, index) => index.toString()}
         onEndReached={onEndReached}
         refreshing={refreshing}
         onRefresh={onRefresh}
         showsVerticalScrollIndicator={false}
+        // TODO: useCallback
         renderItem={({ item }) => (
-          <Movie activeOpacity={0.9} onPress={() => onPressMovie(item.id)}>
-            {/* TODO: Make a animation do drop infos (show only image) */}
-            <Image
-              source={{
-                uri: `https://image.tmdb.org/t/p/original/${item.poster_path}`,
-              }}
-              resizeMode="cover"
-              style={{
-                width: '100%',
-                height: undefined,
-                aspectRatio: 1,
-                alignSelf: 'center',
-              }}
-            />
-            <MovieTitleContainer activeOpacity={0.9}>
-              <MovieTitle>{item?.title}</MovieTitle>
-              <CaretDown
-                size={RFValue(theme.sizes.medium)}
-                color={theme.colors.white}
-              />
-            </MovieTitleContainer>
-            {/* <Text>{item.overview}</Text>
-          <Text>{item.popularity}</Text>
-          <Text>{item.vote_average}</Text>
-          <Text>{item.vote_count}</Text> */}
-          </Movie>
+          <SafeAreaView
+            style={{ flex: 1, paddingBottom: 16 }}
+            edges={['right', 'bottom', 'left']}
+          >
+            <MovieCard
+              activeOpacity={0.9}
+              onPress={() => onPressMovie(item.id)}
+            >
+              <PictureAndInfo>
+                <Image
+                  source={{
+                    uri: `https://image.tmdb.org/t/p/original/${item.poster_path}`,
+                  }}
+                  width={100}
+                  resizeMode="cover"
+                />
+                <MovieInfo>
+                  <MovieTitle>{item?.title}</MovieTitle>
+                  <Overview numberOfLines={3}>{item?.overview}</Overview>
+                  <VotesContainer>
+                    <ThumbsUp
+                      color={theme.colors.gray[100]}
+                      size={16}
+                      weight="bold"
+                    />
+                    <VotesText>{item?.popularity}</VotesText>
+                  </VotesContainer>
+                  <VotesContainer>
+                    <Star color="yellow" size={16} weight="fill" />
+                    <VotesText>
+                      {item?.vote_average} ({item?.vote_count})
+                    </VotesText>
+                  </VotesContainer>
+                </MovieInfo>
+              </PictureAndInfo>
+            </MovieCard>
+          </SafeAreaView>
         )}
       />
     </Container>
   );
+}
+{
+  /*
+            <MovieTitleContainer activeOpacity={0.9}>
+
+              <CaretDown
+                size={RFValue(theme.sizes.medium)}
+                color={theme.colors.white}
+              />
+            </MovieTitleContainer> */
+}
+{
+  /*  */
 }
