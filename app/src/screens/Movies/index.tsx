@@ -4,6 +4,7 @@ import { Star, ThumbsUp } from 'phosphor-react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useTheme } from 'styled-components/native';
+import { Loading } from '@components/Loading';
 
 import { MovieDTO } from '@dtos/MovieDTO';
 import { api } from '@services/api';
@@ -28,6 +29,7 @@ export function Movies() {
   const [movies, setMovies] = useState<MovieDTO[]>([]);
   const [pagination, setPagination] = useState(1);
   const [refreshing, setRefreshing] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const navigation = useNavigation<AppNavigationRoutesProps>();
 
   const theme = useTheme();
@@ -35,6 +37,7 @@ export function Movies() {
   const getMovies = async (currentPagination: number) => {
     setPagination(currentPagination);
     try {
+      setIsLoading(true);
       const response = await api.get(
         `/top_rated?language=en-US&page=${currentPagination}`,
       );
@@ -47,6 +50,7 @@ export function Movies() {
     } catch (error) {
       console.warn(error);
     } finally {
+      setIsLoading(false);
       setRefreshing(false);
     }
   };
@@ -74,54 +78,58 @@ export function Movies() {
     <Container>
       <Title>Top Rated Movies</Title>
       {/* TODO: Make the list with best performance */}
-      <MoviesFlatList
-        data={movies}
-        keyExtractor={(_, index) => index.toString()}
-        onEndReached={onEndReached}
-        refreshing={refreshing}
-        onRefresh={onRefresh}
-        showsVerticalScrollIndicator={false}
-        // TODO: useCallback
-        renderItem={({ item }) => (
-          <SafeAreaView
-            style={{ flex: 1, paddingBottom: 16 }}
-            edges={['right', 'left']}
-          >
-            <MovieCard
-              activeOpacity={0.9}
-              onPress={() => onPressMovie(item.id)}
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <MoviesFlatList
+          data={movies}
+          keyExtractor={(_, index) => index.toString()}
+          onEndReached={onEndReached}
+          refreshing={refreshing}
+          onRefresh={onRefresh}
+          showsVerticalScrollIndicator={false}
+          // TODO: useCallback
+          renderItem={({ item }) => (
+            <SafeAreaView
+              style={{ flex: 1, paddingBottom: 16 }}
+              edges={['right', 'left']}
             >
-              <PictureAndInfo>
-                <Image
-                  source={{
-                    uri: `https://image.tmdb.org/t/p/original/${item.poster_path}`,
-                  }}
-                  width={100}
-                  resizeMode="cover"
-                />
-                <MovieInfo>
-                  <MovieTitle>{item?.title}</MovieTitle>
-                  <Overview numberOfLines={3}>{item?.overview}</Overview>
-                  <VotesContainer>
-                    <ThumbsUp
-                      color={theme.colors.gray[100]}
-                      size={16}
-                      weight="bold"
-                    />
-                    <VotesText>{item?.popularity}</VotesText>
-                  </VotesContainer>
-                  <VotesContainer>
-                    <Star color="yellow" size={16} weight="fill" />
-                    <VotesText>
-                      {item?.vote_average} ({item?.vote_count})
-                    </VotesText>
-                  </VotesContainer>
-                </MovieInfo>
-              </PictureAndInfo>
-            </MovieCard>
-          </SafeAreaView>
-        )}
-      />
+              <MovieCard
+                activeOpacity={0.9}
+                onPress={() => onPressMovie(item.id)}
+              >
+                <PictureAndInfo>
+                  <Image
+                    source={{
+                      uri: `https://image.tmdb.org/t/p/original/${item.poster_path}`,
+                    }}
+                    width={100}
+                    resizeMode="cover"
+                  />
+                  <MovieInfo>
+                    <MovieTitle>{item?.title}</MovieTitle>
+                    <Overview numberOfLines={3}>{item?.overview}</Overview>
+                    <VotesContainer>
+                      <ThumbsUp
+                        color={theme.colors.gray[100]}
+                        size={16}
+                        weight="bold"
+                      />
+                      <VotesText>{item?.popularity}</VotesText>
+                    </VotesContainer>
+                    <VotesContainer>
+                      <Star color="yellow" size={16} weight="fill" />
+                      <VotesText>
+                        {item?.vote_average} ({item?.vote_count})
+                      </VotesText>
+                    </VotesContainer>
+                  </MovieInfo>
+                </PictureAndInfo>
+              </MovieCard>
+            </SafeAreaView>
+          )}
+        />
+      )}
     </Container>
   );
 }

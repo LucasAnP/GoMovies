@@ -70,8 +70,8 @@ export function SelectedMovie() {
   };
 
   const onGoBack = () => {
-    navigation.goBack();
     setMovieInfo(undefined);
+    navigation.goBack();
   };
 
   //TODO: check if movie is on favorites and make the star active
