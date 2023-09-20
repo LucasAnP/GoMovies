@@ -42,6 +42,7 @@ module.exports = {
     'react/display-name': 'off',
     'react/prop-types': 'off',
     'react/react-in-jsx-scope': 'off',
+    'react/no-useless-catch': 'off',
     'import-helpers/order-imports': [
       'warn',
       {
