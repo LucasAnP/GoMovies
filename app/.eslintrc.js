@@ -47,15 +47,16 @@ module.exports = {
       {
         newlinesBetween: 'always',
         groups: [
-          ['/^react$/', '/^react-native$/', '/^axios$/'],
+          ['/react/', '/react-native/', '/axios/'],
           'module',
           '/^@shared$/',
           [
-            '/^@services$/',
-            '/^@storage$/',
-            '/^@routes$/',
-            '/^@theme$/',
-            '/^@screens$/',
+            '/@services/',
+            '/@storage/',
+            '/@routes/',
+            '/@theme/',
+            '/@screens/',
+            '/@dtos/',
           ],
           '/./styles/',
         ],

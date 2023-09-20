@@ -1,15 +1,19 @@
 import { useEffect, useState } from 'react';
 import { FlatList, Text } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
-import { api } from '@services/api';
 import { MovieDTO } from '@dtos/MovieDTO';
+import { api } from '@services/api';
+import { AppNavigationRoutesProps } from '@routes/app.routes';
+import Route from '@routes/enums';
 
-import { Container, Movie } from './styles';
+import { Container, Movie, Title } from './styles';
 
 export function Movies() {
   const [movies, setMovies] = useState<MovieDTO[]>([]);
   const [pagination, setPagination] = useState(1);
   const [refreshing, setRefreshing] = useState(false);
+  const navigation = useNavigation<AppNavigationRoutesProps>();
 
   const getMovies = async (currentPagination: number) => {
     setPagination(currentPagination);
@@ -39,13 +43,17 @@ export function Movies() {
     getMovies(pagination + 1);
   };
 
+  const onPressMovie = (movieId: number) => {
+    navigation.navigate(Route.SELECTED_MOVIE, { id: movieId });
+  };
+
   useEffect(() => {
     getMovies(1);
   }, []);
 
   return (
     <Container>
-      <Text>Top Rated Movies</Text>
+      <Title>Top Rated Movies</Title>
       <FlatList
         data={movies}
         keyExtractor={(_, index) => index.toString()}
@@ -53,7 +61,7 @@ export function Movies() {
         refreshing={refreshing}
         onRefresh={onRefresh}
         renderItem={({ item }) => (
-          <Movie>
+          <Movie activeOpacity={0.7} onPress={() => onPressMovie(item.id)}>
             {/* TODO: Make a animation do drop infos (show only image) */}
             <Text>{item.title}</Text>
             <Text>{item.overview}</Text>

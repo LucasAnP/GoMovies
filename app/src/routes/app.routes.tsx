@@ -2,21 +2,25 @@ import {
   BottomTabNavigationProp,
   createBottomTabNavigator,
 } from '@react-navigation/bottom-tabs';
+import { Queue, Star } from 'phosphor-react-native';
+
+import { useTheme } from 'styled-components/native';
+
 import { Favorites } from '@screens/Favorites';
 import { Movies } from '@screens/Movies';
 import { SelectedMovie } from '@screens/SelectedMovie';
-import { Queue, Star } from 'phosphor-react-native';
-import { useTheme } from 'styled-components/native';
 
 import Route from './enums';
 
 type AppRoutes = {
   Movies: undefined;
   Favorites: undefined;
-  SelectedMovie: undefined;
+  SelectedMovie: {
+    id: number;
+  };
 };
 
-export type AppNavigatorRoutesProps = BottomTabNavigationProp<AppRoutes>;
+export type AppNavigationRoutesProps = BottomTabNavigationProp<AppRoutes>;
 
 const Tab = createBottomTabNavigator<AppRoutes>();
 
@@ -34,26 +38,22 @@ export function AppRoutes() {
         name={Route.MOVIES}
         component={Movies}
         options={{
-          tabBarIcon: () => (
-            <Queue
-              color={theme.colors.red[400]}
-              weight="fill"
-              size={theme.sizes.large}
-            />
+          tabBarIcon: ({ color }) => (
+            <Queue color={color} weight="fill" size={theme.sizes.large} />
           ),
+          tabBarInactiveTintColor: theme.colors.gray[200],
+          tabBarActiveTintColor: theme.colors.red[400],
         }}
       />
       <Tab.Screen
         name={Route.FAVORITES}
         component={Favorites}
         options={{
-          tabBarIcon: () => (
-            <Star
-              color={theme.colors.red[400]}
-              weight="fill"
-              size={theme.sizes.large}
-            />
+          tabBarIcon: ({ color }) => (
+            <Star color={color} weight="fill" size={theme.sizes.large} />
           ),
+          tabBarInactiveTintColor: theme.colors.gray[200],
+          tabBarActiveTintColor: theme.colors.red[400],
         }}
       />
       <Tab.Screen

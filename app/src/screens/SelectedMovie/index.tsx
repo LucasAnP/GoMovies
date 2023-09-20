@@ -1,9 +1,11 @@
-import { Text, View } from 'react-native';
+import { Text } from 'react-native';
+
+import { Container } from './styles';
 
 export function SelectedMovie() {
   return (
-    <View>
+    <Container>
       <Text>SelectedMovie</Text>
-    </View>
+    </Container>
   );
 }
