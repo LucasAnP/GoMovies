@@ -13,7 +13,6 @@ import { Loading } from '@components/Loading';
 import { api } from '@services/api';
 import { SelectedMovieDTO } from '@dtos/SelectedMovieDTO';
 import { AppNavigationRoutesProps } from '@routes/app.routes';
-import { addFavoriteMovie } from '@storage/favorites/addFavoriteMovie';
 import { MovieDTO } from '@dtos/MovieDTO';
 
 import {
@@ -31,6 +30,9 @@ import {
   ScrollView,
   StarIcon,
 } from './styles';
+
+import { useAppDispatch } from '../../redux/store';
+import { addFavoriteMovie } from '../../redux/slices/moviesSlice';
 
 type SelectedMovieParams = {
   id: number;
@@ -51,6 +53,7 @@ export function SelectedMovie() {
   } as MovieDTO;
 
   const route = useRoute();
+  const dispatch = useAppDispatch();
   const { id } = route.params as SelectedMovieParams;
   const insets = useSafeAreaInsets();
   const navigation = useNavigation<AppNavigationRoutesProps>();
@@ -78,7 +81,7 @@ export function SelectedMovie() {
 
   const favoriteMovie = async () => {
     try {
-      await addFavoriteMovie(movieInfoToFavorite);
+      dispatch(addFavoriteMovie(movieInfoToFavorite));
     } catch (error) {
       // TODO: fix type
       Alert.alert('Unable to favorite', error.message);
