@@ -157,7 +157,7 @@ export function SelectedMovie() {
 
   return (
     <>
-      {loading && !movieInfo ? (
+      {loading ? (
         <Container>
           <Loading />
         </Container>
