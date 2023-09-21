@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useLayoutEffect } from 'react';
 import { Alert } from 'react-native';
 import {
   useFocusEffect,
@@ -127,15 +127,10 @@ export function SelectedMovie() {
     }
   };
 
-  //TODO: check if movie is on favorites and make the star active
   const checkIfMovieIsFavorited = () => {
-    console.log('selectedMovieId', selectedMovieId);
-    console.log('Favorited', favoritedMovies);
-
     const filteredEqualSelectedMovie = favoritedMovies.filter(
       (movieInside) => movieInside.id === selectedMovieId,
     );
-    console.log('filteredEqualSelectedMovie', filteredEqualSelectedMovie);
     if (filteredEqualSelectedMovie.length > 0) {
       setFavorited(true);
     } else {
@@ -143,16 +138,14 @@ export function SelectedMovie() {
     }
   };
 
+  useLayoutEffect(() => {
+    checkIfMovieIsFavorited();
+  }, [selectedMovieId]);
+
   useFocusEffect(
     useCallback(() => {
       getSelectedMovieDetails();
     }, [selectedMovieId]),
-  );
-
-  useFocusEffect(
-    useCallback(() => {
-      checkIfMovieIsFavorited();
-    }, [favoritedMovies]),
   );
 
   return (

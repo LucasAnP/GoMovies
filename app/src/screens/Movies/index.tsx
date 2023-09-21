@@ -77,7 +77,6 @@ export function Movies() {
   return (
     <Container>
       <Title>Top Rated Movies</Title>
-      {/* TODO: Make the list with best performance can usecallback */}
       {isLoading && movies.length === 0 ? (
         <Loading />
       ) : (
