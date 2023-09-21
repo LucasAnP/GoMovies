@@ -1,8 +1,6 @@
 import { useCallback } from 'react';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
-import { Star, ThumbsUp, Trash } from 'phosphor-react-native';
 import { Alert, TouchableOpacity, FlatList } from 'react-native';
-import { RFValue } from 'react-native-responsive-fontsize';
 
 import { Loading } from '@components/Loading';
 import { useTheme } from 'styled-components/native';
@@ -12,6 +10,7 @@ import {
   removeAllFavoriteMovies,
   removeFavoriteMovie,
 } from '@redux/slices/moviesSlice';
+import { MovieCard } from '@components/MovieCard';
 
 import { AppNavigationRoutesProps } from '@routes/app.routes';
 import Route from '@routes/enums';
@@ -22,17 +21,9 @@ import {
   EmptyListContainer,
   EmptyListTitle,
   Header,
-  Image,
-  MovieCard,
-  MovieInfo,
-  MovieTitle,
-  Overview,
-  PictureAndInfo,
-  PopularityIcon,
+  RemoveButton,
   Title,
-  TrashContainer,
-  VotesContainer,
-  VotesText,
+  TrashIcon,
 } from './styles';
 
 export function Favorites() {
@@ -95,15 +86,13 @@ export function Favorites() {
   return (
     <Container>
       <Header>
-        <Title>Favorite Movies</Title>
-        <TouchableOpacity
+        <Title>Favorited Movies</Title>
+        <RemoveButton
           onPress={() => handleRemoveAllMovies()}
           activeOpacity={0.7}
         >
-          {favoritedMovies.length > 0 && (
-            <Trash color={theme.colors.red[400]} size={RFValue(22)} />
-          )}
-        </TouchableOpacity>
+          {favoritedMovies.length > 0 && <TrashIcon />}
+        </RemoveButton>
       </Header>
 
       <FlatList
@@ -125,32 +114,11 @@ export function Favorites() {
           </EmptyListContainer>
         )}
         renderItem={({ item }) => (
-          <MovieCard activeOpacity={0.9} onPress={() => onPressMovie(item.id)}>
-            <PictureAndInfo>
-              <Image
-                source={{
-                  uri: `https://image.tmdb.org/t/p/w500/${item.poster_path}`,
-                }}
-              />
-              <MovieInfo>
-                <MovieTitle>{item?.title}</MovieTitle>
-                <Overview numberOfLines={3}>{item?.overview}</Overview>
-                <VotesContainer>
-                  <PopularityIcon />
-                  <VotesText>{item?.popularity}</VotesText>
-                </VotesContainer>
-                <VotesContainer>
-                  <Star color="yellow" size={16} weight="fill" />
-                  <VotesText>
-                    {item?.vote_average} ({item?.vote_count})
-                  </VotesText>
-                </VotesContainer>
-              </MovieInfo>
-              <TrashContainer onPress={() => handleRemoveFavorite(item)}>
-                <Trash color={theme.colors.red[400]} size={RFValue(16)} />
-              </TrashContainer>
-            </PictureAndInfo>
-          </MovieCard>
+          <MovieCard
+            item={item}
+            onPress={() => onPressMovie(item.id)}
+            removeFunction={() => handleRemoveFavorite(item)}
+          />
         )}
       />
     </Container>

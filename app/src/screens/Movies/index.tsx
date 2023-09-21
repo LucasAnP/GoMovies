@@ -1,33 +1,17 @@
 import { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { RefreshControl } from 'react-native';
 
 import { useTheme } from 'styled-components/native';
 import { Loading } from '@components/Loading';
+import { MovieCard } from '@components/MovieCard';
 
 import { MovieDTO } from '@dtos/MovieDTO';
 import { api } from '@services/api';
 import { AppNavigationRoutesProps } from '@routes/app.routes';
 import Route from '@routes/enums';
 
-import {
-  Container,
-  Image,
-  MovieCard,
-  MovieInfo,
-  MovieTitle,
-  MoviesFlatList,
-  Overview,
-  PaginationLoading,
-  PictureAndInfo,
-  PopularityContainer,
-  PopularityIcon,
-  StarIcon,
-  Title,
-  VotesContainer,
-  VotesText,
-} from './styles';
+import { Container, MoviesFlatList, PaginationLoading, Title } from './styles';
 
 export function Movies() {
   const { colors } = useTheme();
@@ -98,6 +82,7 @@ export function Movies() {
           showsVerticalScrollIndicator={false}
           ListFooterComponent={
             movies.length > 0 ? (
+              // TODO: Create Component
               <PaginationLoading>
                 <Loading />
               </PaginationLoading>
@@ -106,34 +91,7 @@ export function Movies() {
             )
           }
           renderItem={({ item }) => (
-            <SafeAreaView
-              style={{ flex: 1, paddingBottom: 16 }}
-              edges={['right', 'left']}
-            >
-              <MovieCard onPress={() => onPressMovie(item.id)}>
-                <PictureAndInfo>
-                  <Image
-                    source={{
-                      uri: `https://image.tmdb.org/t/p/original/${item.poster_path}`,
-                    }}
-                  />
-                  <MovieInfo>
-                    <MovieTitle>{item?.title}</MovieTitle>
-                    <Overview numberOfLines={3}>{item?.overview}</Overview>
-                    <PopularityContainer>
-                      <PopularityIcon />
-                      <VotesText>{item?.popularity}</VotesText>
-                      <VotesContainer>
-                        <StarIcon />
-                        <VotesText>
-                          {item?.vote_average} ({item?.vote_count})
-                        </VotesText>
-                      </VotesContainer>
-                    </PopularityContainer>
-                  </MovieInfo>
-                </PictureAndInfo>
-              </MovieCard>
-            </SafeAreaView>
+            <MovieCard item={item} onPress={() => onPressMovie(item.id)} />
           )}
         />
       )}

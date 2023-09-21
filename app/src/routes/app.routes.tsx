@@ -2,7 +2,7 @@ import {
   BottomTabNavigationProp,
   createBottomTabNavigator,
 } from '@react-navigation/bottom-tabs';
-import { Queue, Star } from 'phosphor-react-native';
+import { Heart, Queue } from 'phosphor-react-native';
 
 import { useTheme } from 'styled-components/native';
 
@@ -50,7 +50,7 @@ export function AppRoutes() {
         component={Favorites}
         options={{
           tabBarIcon: ({ color }) => (
-            <Star color={color} weight="fill" size={theme.sizes.large} />
+            <Heart color={color} weight="fill" size={theme.sizes.large} />
           ),
           tabBarInactiveTintColor: theme.colors.gray[200],
           tabBarActiveTintColor: theme.colors.red[400],
