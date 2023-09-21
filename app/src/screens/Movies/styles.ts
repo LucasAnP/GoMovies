@@ -12,7 +12,7 @@ export const MoviesFlatList = styled.FlatList``;
 
 export const Title = styled.Text`
   font-size: ${({ theme }) => theme.fontSizes.xl}px;
-  color: ${({ theme }) => theme.colors.red[400]};
+  color: ${({ theme }) => theme.colors.gray[100]};
   font-weight: bold;
 
   margin-bottom: 16px;

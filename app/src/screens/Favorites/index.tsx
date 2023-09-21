@@ -3,6 +3,7 @@ import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Star, ThumbsUp, Trash } from 'phosphor-react-native';
 import { Alert, TouchableOpacity, FlatList } from 'react-native';
+import { RFValue } from 'react-native-responsive-fontsize';
 
 import { Loading } from '@components/Loading';
 import { useTheme } from 'styled-components/native';
@@ -23,6 +24,7 @@ import {
   Overview,
   PictureAndInfo,
   Title,
+  TrashContainer,
   VotesContainer,
   VotesText,
 } from './styles';
@@ -102,7 +104,9 @@ export function Favorites() {
           onPress={() => handleRemoveAllMovies()}
           activeOpacity={0.7}
         >
-          {favoritedMovies.length > 0 && <Trash color="white" size={16} />}
+          {favoritedMovies.length > 0 && (
+            <Trash color={theme.colors.red[400]} size={RFValue(22)} />
+          )}
         </TouchableOpacity>
       </Header>
       {/* TODO: Put loading here */}
@@ -126,46 +130,38 @@ export function Favorites() {
           </EmptyListContainer>
         )}
         renderItem={({ item }) => (
-          <SafeAreaView
-            style={{ flex: 1, paddingBottom: 16 }}
-            edges={['right', 'left']}
-          >
-            <MovieCard
-              activeOpacity={0.9}
-              onPress={() => onPressMovie(item.id)}
-            >
-              <PictureAndInfo>
-                <Image
-                  source={{
-                    uri: `https://image.tmdb.org/t/p/original/${item.poster_path}`,
-                  }}
-                  width={100}
-                  resizeMode="cover"
-                />
-                <MovieInfo>
-                  <MovieTitle>{item?.title}</MovieTitle>
-                  <Overview numberOfLines={3}>{item?.overview}</Overview>
-                  <VotesContainer>
-                    <ThumbsUp
-                      color={theme.colors.gray[100]}
-                      size={16}
-                      weight="bold"
-                    />
-                    <VotesText>{item?.popularity}</VotesText>
-                  </VotesContainer>
-                  <VotesContainer>
-                    <Star color="yellow" size={16} weight="fill" />
-                    <VotesText>
-                      {item?.vote_average} ({item?.vote_count})
-                    </VotesText>
-                  </VotesContainer>
-                </MovieInfo>
-                <TouchableOpacity onPress={() => handleRemoveFavorite(item)}>
-                  <Trash size={16} color="white" />
-                </TouchableOpacity>
-              </PictureAndInfo>
-            </MovieCard>
-          </SafeAreaView>
+          <MovieCard activeOpacity={0.9} onPress={() => onPressMovie(item.id)}>
+            <PictureAndInfo>
+              <Image
+                source={{
+                  uri: `https://image.tmdb.org/t/p/original/${item.poster_path}`,
+                }}
+                width={100}
+                resizeMode="cover"
+              />
+              <MovieInfo>
+                <MovieTitle>{item?.title}</MovieTitle>
+                <Overview numberOfLines={3}>{item?.overview}</Overview>
+                <VotesContainer>
+                  <ThumbsUp
+                    color={theme.colors.gray[100]}
+                    size={16}
+                    weight="bold"
+                  />
+                  <VotesText>{item?.popularity}</VotesText>
+                </VotesContainer>
+                <VotesContainer>
+                  <Star color="yellow" size={16} weight="fill" />
+                  <VotesText>
+                    {item?.vote_average} ({item?.vote_count})
+                  </VotesText>
+                </VotesContainer>
+              </MovieInfo>
+              <TrashContainer onPress={() => handleRemoveFavorite(item)}>
+                <Trash color={theme.colors.red[400]} size={RFValue(16)} />
+              </TrashContainer>
+            </PictureAndInfo>
+          </MovieCard>
         )}
       />
     </Container>

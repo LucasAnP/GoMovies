@@ -1,3 +1,4 @@
+import { RFValue } from 'react-native-responsive-fontsize';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import styled from 'styled-components/native';
@@ -19,8 +20,8 @@ export const Header = styled.View`
 `;
 
 export const Title = styled.Text`
-  font-size: ${({ theme }) => theme.fontSizes.xl}px;
-  color: ${({ theme }) => theme.colors.red[400]};
+  font-size: ${({ theme }) => RFValue(theme.fontSizes.xl)}px;
+  color: ${({ theme }) => theme.colors.gray[100]};
   font-weight: bold;
 `;
 
@@ -42,6 +43,8 @@ export const MovieCard = styled.TouchableOpacity`
 
   background-color: ${({ theme }) => theme.colors.gray[500]};
   border-radius: 8px;
+
+  margin-bottom: 16px;
 `;
 
 export const PictureAndInfo = styled.View`
@@ -89,4 +92,11 @@ export const VotesText = styled.Text`
   color: ${({ theme }) => theme.colors.gray[200]};
 
   margin-left: 4px;
+`;
+
+export const TrashContainer = styled.TouchableOpacity`
+  flex-direction: row;
+  position: absolute;
+  right: ${RFValue(6)}px;
+  top: ${RFValue(6)}px;
 `;
