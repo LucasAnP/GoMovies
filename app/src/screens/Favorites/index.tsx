@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback } from 'react';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Star, ThumbsUp, Trash } from 'phosphor-react-native';
@@ -45,12 +45,11 @@ export function Favorites() {
 
   const navigation = useNavigation<AppNavigationRoutesProps>();
 
-  const fetchFavoritesMovies = () => {
-    dispatch(fetchFavorites());
+  const fetchFavoritesMovies = async () => {
+    await dispatch(fetchFavorites());
   };
 
   const handleRemoveFavorite = (movieWillRemove: MovieDTO) => {
-    // TODO: active loading when removing
     Alert.alert(
       'Remove favorite',
       'Are you sure to remove this movie from your favorite list?',
@@ -108,69 +107,67 @@ export function Favorites() {
       </Header>
       {/* TODO: Put loading here */}
 
-      {
-        <FlatList
-          data={favoritedMovies}
-          keyExtractor={(_, index) => index.toString()}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={
-            favoritedMovies?.length === 0 && {
-              flex: 1,
-              justifyContent: 'center',
-            }
+      <FlatList
+        data={favoritedMovies}
+        keyExtractor={(_, index) => index.toString()}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={
+          favoritedMovies?.length === 0 && {
+            flex: 1,
+            justifyContent: 'center',
           }
-          ListEmptyComponent={() => (
-            <EmptyListContainer>
-              <EmptyListTitle>
-                There are no favorite movies.{'\n'}
-                Shall we bookmark any?
-              </EmptyListTitle>
-            </EmptyListContainer>
-          )}
-          renderItem={({ item }) => (
-            <SafeAreaView
-              style={{ flex: 1, paddingBottom: 16 }}
-              edges={['right', 'left']}
+        }
+        ListEmptyComponent={() => (
+          <EmptyListContainer>
+            <EmptyListTitle>
+              There are no favorite movies.{'\n'}
+              Shall we bookmark any?
+            </EmptyListTitle>
+          </EmptyListContainer>
+        )}
+        renderItem={({ item }) => (
+          <SafeAreaView
+            style={{ flex: 1, paddingBottom: 16 }}
+            edges={['right', 'left']}
+          >
+            <MovieCard
+              activeOpacity={0.9}
+              onPress={() => onPressMovie(item.id)}
             >
-              <MovieCard
-                activeOpacity={0.9}
-                onPress={() => onPressMovie(item.id)}
-              >
-                <PictureAndInfo>
-                  <Image
-                    source={{
-                      uri: `https://image.tmdb.org/t/p/original/${item.poster_path}`,
-                    }}
-                    width={100}
-                    resizeMode="cover"
-                  />
-                  <MovieInfo>
-                    <MovieTitle>{item?.title}</MovieTitle>
-                    <Overview numberOfLines={3}>{item?.overview}</Overview>
-                    <VotesContainer>
-                      <ThumbsUp
-                        color={theme.colors.gray[100]}
-                        size={16}
-                        weight="bold"
-                      />
-                      <VotesText>{item?.popularity}</VotesText>
-                    </VotesContainer>
-                    <VotesContainer>
-                      <Star color="yellow" size={16} weight="fill" />
-                      <VotesText>
-                        {item?.vote_average} ({item?.vote_count})
-                      </VotesText>
-                    </VotesContainer>
-                  </MovieInfo>
-                  <TouchableOpacity onPress={() => handleRemoveFavorite(item)}>
-                    <Trash size={16} color="white" />
-                  </TouchableOpacity>
-                </PictureAndInfo>
-              </MovieCard>
-            </SafeAreaView>
-          )}
-        />
-      }
+              <PictureAndInfo>
+                <Image
+                  source={{
+                    uri: `https://image.tmdb.org/t/p/original/${item.poster_path}`,
+                  }}
+                  width={100}
+                  resizeMode="cover"
+                />
+                <MovieInfo>
+                  <MovieTitle>{item?.title}</MovieTitle>
+                  <Overview numberOfLines={3}>{item?.overview}</Overview>
+                  <VotesContainer>
+                    <ThumbsUp
+                      color={theme.colors.gray[100]}
+                      size={16}
+                      weight="bold"
+                    />
+                    <VotesText>{item?.popularity}</VotesText>
+                  </VotesContainer>
+                  <VotesContainer>
+                    <Star color="yellow" size={16} weight="fill" />
+                    <VotesText>
+                      {item?.vote_average} ({item?.vote_count})
+                    </VotesText>
+                  </VotesContainer>
+                </MovieInfo>
+                <TouchableOpacity onPress={() => handleRemoveFavorite(item)}>
+                  <Trash size={16} color="white" />
+                </TouchableOpacity>
+              </PictureAndInfo>
+            </MovieCard>
+          </SafeAreaView>
+        )}
+      />
     </Container>
   );
 }

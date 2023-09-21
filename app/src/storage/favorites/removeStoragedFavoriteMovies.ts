@@ -16,5 +16,6 @@ export async function removeStoragedMovie(movie: MovieDTO) {
   );
   const movies = JSON.stringify(filtered);
   AsyncStorage.setItem(FAVORITE_STORAGE, movies);
-  return movies;
+
+  return JSON.parse(movies);
 }

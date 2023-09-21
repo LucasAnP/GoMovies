@@ -52,7 +52,7 @@ export const removeFavoriteMovie = createAsyncThunk(
 
 const initialState: MovieStoragedDTO = {
   isLoading: false,
-  favoritedMovies: [],
+  favoritedMovies: [] as MovieDTO[],
 };
 
 const moviesSlice = createSlice({
@@ -91,7 +91,6 @@ const moviesSlice = createSlice({
       })
       .addCase(removeFavoriteMovie.fulfilled, (state, action) => {
         state.isLoading = false;
-        console.log('Action', action.payload);
         state.favoritedMovies = action.payload;
       })
       .addCase(removeFavoriteMovie.rejected, (state) => {
