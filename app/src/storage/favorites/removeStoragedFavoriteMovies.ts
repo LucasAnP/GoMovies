@@ -8,7 +8,7 @@ import { getFavoritedMovies } from './getFavoritedMovies';
 export async function removeAllStoragedFavoriteMovies() {
   await AsyncStorage.removeItem(FAVORITE_STORAGE);
 }
-
+// TODO: Tipar retorno
 export async function removeStoragedMovie(movie: MovieDTO) {
   const storage = await getFavoritedMovies();
   const filtered = storage.filter(
@@ -16,4 +16,5 @@ export async function removeStoragedMovie(movie: MovieDTO) {
   );
   const movies = JSON.stringify(filtered);
   AsyncStorage.setItem(FAVORITE_STORAGE, movies);
+  return movies;
 }

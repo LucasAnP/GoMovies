@@ -18,8 +18,6 @@ export const Header = styled.View`
   margin-bottom: 16px;
 `;
 
-export const MoviesFlatList = styled.FlatList``;
-
 export const Title = styled.Text`
   font-size: ${({ theme }) => theme.fontSizes.xl}px;
   color: ${({ theme }) => theme.colors.red[400]};

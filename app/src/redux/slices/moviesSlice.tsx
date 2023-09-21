@@ -6,6 +6,7 @@ import { MovieDTO } from '@dtos/MovieDTO';
 import { getFavoritedMovies } from '@storage/favorites/getFavoritedMovies';
 import { storageFavoriteMovie } from '@storage/favorites/addFavoriteMovie';
 import { MovieStoragedDTO } from '@dtos/MovieStoragedDTO';
+import { removeStoragedMovie } from '@storage/favorites/removeStoragedFavoriteMovies';
 
 export const fetchFavorites = createAsyncThunk(
   'movies/fetchFavorites',
@@ -36,6 +37,19 @@ export const addFavoriteMovie = createAsyncThunk(
   },
 );
 
+export const removeFavoriteMovie = createAsyncThunk(
+  'movies/removeFavoriteMovie',
+  async (movie: MovieDTO) => {
+    try {
+      const restOfMovies = await removeStoragedMovie(movie);
+      return restOfMovies;
+    } catch (error) {
+      console.warn(error);
+      throw error;
+    }
+  },
+);
+
 const initialState: MovieStoragedDTO = {
   isLoading: false,
   favoritedMovies: [],
@@ -58,6 +72,7 @@ const moviesSlice = createSlice({
         state.isLoading = false;
         Alert.alert('Movies', 'Unable to load favorite movies');
       })
+
       .addCase(addFavoriteMovie.pending, (state) => {
         state.isLoading = true;
       })
@@ -69,6 +84,18 @@ const moviesSlice = createSlice({
       .addCase(addFavoriteMovie.rejected, (state) => {
         state.isLoading = false;
         Alert.alert('Movies', 'Unable to favorite movie');
+      })
+
+      .addCase(removeFavoriteMovie.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(removeFavoriteMovie.fulfilled, (state, action) => {
+        state.isLoading = false;
+        console.log('Action', action.payload);
+        state.favoritedMovies = action.payload;
+      })
+      .addCase(removeFavoriteMovie.rejected, (state) => {
+        state.isLoading = false;
       });
   },
 });
