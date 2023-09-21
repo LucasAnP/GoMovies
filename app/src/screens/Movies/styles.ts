@@ -71,3 +71,16 @@ export const VotesText = styled.Text`
 
   margin-left: 4px;
 `;
+
+export const PaginationLoading = styled.View`
+  width: 50px;
+  height: 50px;
+  padding: 24px;
+  border-radius: 8px;
+  background-color: ${({ theme }) => theme.colors.gray[500]};
+  align-self: center;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 32px;
+`;

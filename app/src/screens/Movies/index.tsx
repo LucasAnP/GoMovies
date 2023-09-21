@@ -19,6 +19,7 @@ import {
   MovieTitle,
   MoviesFlatList,
   Overview,
+  PaginationLoading,
   PictureAndInfo,
   Title,
   VotesContainer,
@@ -72,13 +73,11 @@ export function Movies() {
     getMovies(1);
   }, []);
 
-  // TODO: Fix movies pushing getMovies(1)result in concat
-
   return (
     <Container>
       <Title>Top Rated Movies</Title>
-      {/* TODO: Make the list with best performance */}
-      {isLoading ? (
+      {/* TODO: Make the list with best performance can usecallback */}
+      {isLoading && !movies ? (
         <Loading />
       ) : (
         <MoviesFlatList
@@ -88,7 +87,11 @@ export function Movies() {
           refreshing={refreshing}
           onRefresh={onRefresh}
           showsVerticalScrollIndicator={false}
-          // TODO: useCallback
+          ListFooterComponent={
+            <PaginationLoading>
+              <Loading />
+            </PaginationLoading>
+          }
           renderItem={({ item }) => (
             <SafeAreaView
               style={{ flex: 1, paddingBottom: 16 }}
