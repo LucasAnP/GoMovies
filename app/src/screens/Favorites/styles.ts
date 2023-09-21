@@ -8,14 +8,22 @@ export const Container = styled(SafeAreaView)`
   padding: 16px 16px 0;
 `;
 
+export const Header = styled.View`
+  width: 100%;
+  flex-direction: row;
+
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 16px;
+`;
+
 export const MoviesFlatList = styled.FlatList``;
 
 export const Title = styled.Text`
   font-size: ${({ theme }) => theme.fontSizes.xl}px;
   color: ${({ theme }) => theme.colors.red[400]};
   font-weight: bold;
-
-  margin-bottom: 16px;
 `;
 
 export const EmptyListContainer = styled.View`

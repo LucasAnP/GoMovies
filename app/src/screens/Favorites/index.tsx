@@ -10,12 +10,16 @@ import { useTheme } from 'styled-components/native';
 import { AppNavigationRoutesProps } from '@routes/app.routes';
 import Route from '@routes/enums';
 import { MovieDTO } from '@dtos/MovieDTO';
-import { removeStoragedMovie } from '@storage/favorites/removeStoragedFavoriteMovies';
+import {
+  removeAllStoragedFavoriteMovies,
+  removeStoragedMovie,
+} from '@storage/favorites/removeStoragedFavoriteMovies';
 
 import {
   Container,
   EmptyListContainer,
   EmptyListTitle,
+  Header,
   Image,
   MovieCard,
   MovieInfo,
@@ -58,6 +62,17 @@ export function Favorites() {
     );
   };
 
+  const handleRemoveAllMovies = () => {
+    Alert.alert(
+      'Remove favorite',
+      'Are you sure to remove all movies from your favorite list?',
+      [
+        { text: 'no', style: 'cancel' },
+        { text: 'Yes', onPress: () => removeAllStoragedFavoriteMovies() },
+      ],
+    );
+  };
+
   const onPressMovie = (movieId: number) => {
     navigation.navigate(Route.SELECTED_MOVIE, { id: movieId });
   };
@@ -70,7 +85,15 @@ export function Favorites() {
 
   return (
     <Container>
-      <Title>Favorite Movies</Title>
+      <Header>
+        <Title>Favorite Movies</Title>
+        <TouchableOpacity
+          onPress={() => handleRemoveAllMovies()}
+          activeOpacity={0.7}
+        >
+          <Trash color="white" size={16} />
+        </TouchableOpacity>
+      </Header>
       {isLoading && !favoritedMovies ? (
         <Loading />
       ) : (
