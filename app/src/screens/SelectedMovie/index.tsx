@@ -105,8 +105,6 @@ export function SelectedMovie() {
     }, [id]),
   );
 
-  // TODO: Have to create favorite component
-
   return (
     <>
       {loading && !movieInfo ? (

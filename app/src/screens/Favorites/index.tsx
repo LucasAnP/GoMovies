@@ -1,13 +1,16 @@
 import { useCallback } from 'react';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Star, ThumbsUp } from 'phosphor-react-native';
+import { Star, ThumbsUp, Trash } from 'phosphor-react-native';
+import { Alert, TouchableOpacity } from 'react-native';
 
 import { Loading } from '@components/Loading';
 import { useTheme } from 'styled-components/native';
 
 import { AppNavigationRoutesProps } from '@routes/app.routes';
 import Route from '@routes/enums';
+import { MovieDTO } from '@dtos/MovieDTO';
+import { removeStoragedMovie } from '@storage/favorites/removeStoragedFavoriteMovies';
 
 import {
   Container,
@@ -29,8 +32,6 @@ import { useAppDispatch, useAppSelector } from '../../redux/store';
 import { fetchFavorites } from '../../redux/slices/moviesSlice';
 
 export function Favorites() {
-  // const [favoritedMovies, setFavoritedMovies] = useState<MovieDTO[]>();
-
   const theme = useTheme();
 
   const { favoritedMovies, isLoading } = useAppSelector((state) => {
@@ -45,6 +46,18 @@ export function Favorites() {
     dispatch(fetchFavorites());
   };
 
+  const handleRemoveFavorite = (movieWillRemove: MovieDTO) => {
+    // TODO: active loading when removing
+    Alert.alert(
+      'Remove favorite',
+      'Are you sure to remove this movie from your favorite list?',
+      [
+        { text: 'no', style: 'cancel' },
+        { text: 'Yes', onPress: () => removeStoragedMovie(movieWillRemove) },
+      ],
+    );
+  };
+
   const onPressMovie = (movieId: number) => {
     navigation.navigate(Route.SELECTED_MOVIE, { id: movieId });
   };
@@ -52,13 +65,13 @@ export function Favorites() {
   useFocusEffect(
     useCallback(() => {
       fetchFavoritesMovies();
-    }, []),
+    }, [favoritedMovies]),
   );
 
   return (
     <Container>
       <Title>Favorite Movies</Title>
-      {isLoading ? (
+      {isLoading && !favoritedMovies ? (
         <Loading />
       ) : (
         <MoviesFlatList
@@ -114,6 +127,9 @@ export function Favorites() {
                       </VotesText>
                     </VotesContainer>
                   </MovieInfo>
+                  <TouchableOpacity onPress={() => handleRemoveFavorite(item)}>
+                    <Trash size={16} color="white" />
+                  </TouchableOpacity>
                 </PictureAndInfo>
               </MovieCard>
             </SafeAreaView>
