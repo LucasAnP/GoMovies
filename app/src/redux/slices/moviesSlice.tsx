@@ -57,7 +57,6 @@ export const removeAllFavoriteMovies = createAsyncThunk(
   'movies/removeAllFavoriteMovies',
   async () => {
     try {
-      console.log('Inside');
       await removeAllStoragedFavoriteMovies();
     } catch (error) {
       console.warn(error);
