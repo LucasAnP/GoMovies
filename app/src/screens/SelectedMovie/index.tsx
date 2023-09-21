@@ -172,7 +172,7 @@ export function SelectedMovie() {
           <MovieInfoContainer>
             <MovieTitle>{movieInfo?.title}</MovieTitle>
             <MovieSubtitle>{movieInfo?.release_date}</MovieSubtitle>
-            <Overview numberOfLines={3}>{movieInfo?.overview}</Overview>
+            <Overview>{movieInfo?.overview}</Overview>
             <GenresContainer>
               {movieInfo?.genres.map((item) => (
                 <Genres key={item.id}>
