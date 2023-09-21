@@ -34,13 +34,10 @@ import {
 } from './styles';
 
 import { useAppDispatch, useAppSelector } from '../../redux/store';
-import {
-  addFavoriteMovie,
-  fetchFavorites,
-} from '../../redux/slices/moviesSlice';
+import { addFavoriteMovie } from '../../redux/slices/moviesSlice';
 
 type SelectedMovieParams = {
-  id: number;
+  selectedMovieId: number;
 };
 
 export function SelectedMovie() {
@@ -60,13 +57,18 @@ export function SelectedMovie() {
   const theme = useTheme();
   const route = useRoute();
   const dispatch = useAppDispatch();
-  const { id } = route.params as SelectedMovieParams;
+  const { selectedMovieId } = route.params as SelectedMovieParams;
   const insets = useSafeAreaInsets();
   const navigation = useNavigation<AppNavigationRoutesProps>();
+
+  const favoritedMovies = useAppSelector((state) => {
+    return state.movies.favoritedMovies;
+  });
 
   const getSelectedMovieDetails = async () => {
     try {
       setLoading(true);
+      const id = selectedMovieId;
       const response = await api.get<SelectedMovieDTO>(
         `/${id}?language=en-US&`,
       );
@@ -82,7 +84,6 @@ export function SelectedMovie() {
     setMovieInfo(undefined);
     navigation.goBack();
   };
-  //TODO: check if movie is on favorites and make the star active
 
   const favoriteMovie = () => {
     try {
@@ -126,10 +127,32 @@ export function SelectedMovie() {
     }
   };
 
+  //TODO: check if movie is on favorites and make the star active
+  const checkIfMovieIsFavorited = () => {
+    console.log('selectedMovieId', selectedMovieId);
+    console.log('Favorited', favoritedMovies);
+
+    const filteredEqualSelectedMovie = favoritedMovies.filter(
+      (movieInside) => movieInside.id === selectedMovieId,
+    );
+    console.log('filteredEqualSelectedMovie', filteredEqualSelectedMovie);
+    if (filteredEqualSelectedMovie.length > 0) {
+      setFavorited(true);
+    } else {
+      setFavorited(false);
+    }
+  };
+
   useFocusEffect(
     useCallback(() => {
       getSelectedMovieDetails();
-    }, [id]),
+    }, [selectedMovieId]),
+  );
+
+  useFocusEffect(
+    useCallback(() => {
+      checkIfMovieIsFavorited();
+    }, [favoritedMovies]),
   );
 
   return (

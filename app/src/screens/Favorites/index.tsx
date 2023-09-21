@@ -10,7 +10,6 @@ import { useTheme } from 'styled-components/native';
 import { AppNavigationRoutesProps } from '@routes/app.routes';
 import Route from '@routes/enums';
 import { MovieDTO } from '@dtos/MovieDTO';
-import { removeAllStoragedFavoriteMovies } from '@storage/favorites/removeStoragedFavoriteMovies';
 
 import {
   Container,
@@ -78,7 +77,7 @@ export function Favorites() {
   };
 
   const onPressMovie = (movieId: number) => {
-    navigation.navigate(Route.SELECTED_MOVIE, { id: movieId });
+    navigation.navigate(Route.SELECTED_MOVIE, { selectedMovieId: movieId });
   };
 
   useFocusEffect(

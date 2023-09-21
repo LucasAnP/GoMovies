@@ -67,7 +67,7 @@ export function Movies() {
   };
 
   const onPressMovie = (movieId: number) => {
-    navigation.navigate(Route.SELECTED_MOVIE, { id: movieId });
+    navigation.navigate(Route.SELECTED_MOVIE, { selectedMovieId: movieId });
   };
 
   useEffect(() => {

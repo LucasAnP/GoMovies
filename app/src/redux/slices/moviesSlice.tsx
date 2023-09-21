@@ -15,7 +15,6 @@ export const fetchFavorites = createAsyncThunk(
   'movies/fetchFavorites',
   async () => {
     try {
-      console.log('Inside fetch');
       const favoritedMovies = await getFavoritedMovies();
       return favoritedMovies;
     } catch (error) {
@@ -29,8 +28,6 @@ export const addFavoriteMovie = createAsyncThunk(
   'movies/addFavoriteMovie',
   async (movie: MovieDTO) => {
     try {
-      console.log('Inside addFavoriteMovie');
-
       const storagedMovies = await storageFavoriteMovie(movie);
       return storagedMovies;
     } catch (error) {
@@ -93,7 +90,6 @@ const moviesSlice = createSlice({
       })
       .addCase(addFavoriteMovie.fulfilled, (state, action) => {
         state.isLoading = false;
-        // TODO: Adjust type error
         state.favoritedMovies = action.payload;
       })
       .addCase(addFavoriteMovie.rejected, (state) => {

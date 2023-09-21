@@ -17,7 +17,7 @@ type AppRoutes = {
   Movies: undefined;
   Favorites: undefined;
   SelectedMovie: {
-    id: number;
+    selectedMovieId: number;
   };
 };
 
