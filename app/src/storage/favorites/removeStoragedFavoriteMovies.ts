@@ -8,8 +8,8 @@ import { getFavoritedMovies } from './getFavoritedMovies';
 export async function removeAllStoragedFavoriteMovies() {
   await AsyncStorage.removeItem(FAVORITE_STORAGE);
 }
-// TODO: Tipar retorno
-export async function removeStoragedMovie(movie: MovieDTO) {
+
+export async function removeStoragedMovie(movie: MovieDTO): Promise<MovieDTO> {
   const storage = await getFavoritedMovies();
   const filtered = storage.filter(
     (movieStoraged) => movieStoraged.id != movie.id,

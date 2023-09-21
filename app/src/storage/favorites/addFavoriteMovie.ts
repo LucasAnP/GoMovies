@@ -5,7 +5,9 @@ import { MovieDTO } from '@dtos/MovieDTO';
 import { FAVORITE_STORAGE } from '../storageConfig';
 import { getFavoritedMovies } from './getFavoritedMovies';
 
-export async function storageFavoriteMovie(movie: MovieDTO) {
+export async function storageFavoriteMovie(
+  movie: MovieDTO,
+): Promise<MovieDTO[]> {
   const storedMovies = await getFavoritedMovies();
 
   const moviesAlreadyAdded = storedMovies.filter(

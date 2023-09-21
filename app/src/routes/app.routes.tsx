@@ -2,7 +2,6 @@ import {
   BottomTabNavigationProp,
   createBottomTabNavigator,
 } from '@react-navigation/bottom-tabs';
-import { View } from 'react-native';
 import { Queue, Star } from 'phosphor-react-native';
 
 import { useTheme } from 'styled-components/native';
