@@ -18,18 +18,6 @@ export default {
       700: '#e43236',
     },
   },
-  fontSizes: {
-    /** 12 */
-    xs: 12,
-    /** 14 */
-    sm: 14,
-    /** 16 */
-    md: 16,
-    /** 18 */
-    lg: 18,
-    /** 20 */
-    xl: 20,
-  },
   sizes: {
     zero: RFValue(0),
 

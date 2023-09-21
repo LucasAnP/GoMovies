@@ -17,6 +17,7 @@ module.exports = function (api) {
             '@utils': './src/utils',
             '@services': './src/services',
             '@dtos': './src/dtos',
+            '@redux': './src/redux',
           },
         },
       ],

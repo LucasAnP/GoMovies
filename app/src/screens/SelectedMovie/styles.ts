@@ -1,4 +1,4 @@
-import { Star } from 'phosphor-react-native';
+import { Star, ArrowLeft } from 'phosphor-react-native';
 
 import styled from 'styled-components/native';
 
@@ -19,6 +19,19 @@ export const ScrollView = styled.ScrollView`
   background-color: ${({ theme }) => theme.colors.gray[700]};
 `;
 
+export const GoBackIcon = styled(ArrowLeft).attrs(({ theme }) => ({
+  size: theme.sizes.large,
+  color: theme.colors.gray[100],
+}))``;
+
+export const StarIcon = styled(Star).attrs<StarIconProps>(
+  ({ favorited, theme }) => ({
+    color: favorited ? theme.colors.yellow : theme.colors.gray[100],
+    weight: favorited ? 'fill' : 'duotone',
+    size: theme.sizes.large,
+  }),
+)``;
+
 export const InfoContainer = styled.View``;
 
 export const Header = styled.View`
@@ -30,21 +43,19 @@ export const Header = styled.View`
   align-items: center;
   justify-content: space-between;
 `;
-export const StarIcon = styled(Star).attrs<StarIconProps>(
-  ({ favorited, theme }) => ({
-    color: favorited ? theme.colors.yellow : theme.colors.gray[100],
-    weight: favorited ? 'fill' : 'duotone',
-  }),
-)``;
 
-export const IconContainer = styled.TouchableOpacity`
+export const IconContainer = styled.TouchableOpacity.attrs(() => ({
+  activeOpacity: 0.7,
+}))`
   height: 100%;
 
   align-items: center;
   justify-content: center;
 `;
 
-export const Image = styled.Image`
+export const Image = styled.Image.attrs(() => ({
+  resizeMode: 'stretch',
+}))`
   width: '100%';
   height: 400px;
   border-bottom-left-radius: 8px;

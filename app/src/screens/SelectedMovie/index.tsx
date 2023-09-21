@@ -6,10 +6,10 @@ import {
   useRoute,
 } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { ArrowLeft } from 'phosphor-react-native';
 
 import { Loading } from '@components/Loading';
-import { useTheme } from 'styled-components/native';
+import { addFavoriteMovie } from '@redux/slices/moviesSlice';
+import { useAppDispatch, useAppSelector } from '@redux/store';
 
 import { api } from '@services/api';
 import { SelectedMovieDTO } from '@dtos/SelectedMovieDTO';
@@ -22,6 +22,7 @@ import {
   Genres,
   GenresContainer,
   GenresText,
+  GoBackIcon,
   Header,
   IconContainer,
   Image,
@@ -33,17 +34,22 @@ import {
   StarIcon,
 } from './styles';
 
-import { useAppDispatch, useAppSelector } from '../../redux/store';
-import { addFavoriteMovie } from '../../redux/slices/moviesSlice';
-
 type SelectedMovieParams = {
   selectedMovieId: number;
 };
 
 export function SelectedMovie() {
+  const route = useRoute();
+  const dispatch = useAppDispatch();
+  const insets = useSafeAreaInsets();
+  const { selectedMovieId } = route.params as SelectedMovieParams;
+  const navigation = useNavigation<AppNavigationRoutesProps>();
+
   const [loading, setLoading] = useState(true);
   const [movieInfo, setMovieInfo] = useState<SelectedMovieDTO>();
   const [favorited, setFavorited] = useState(false);
+
+  const finalUri = `https://image.tmdb.org/t/p/w500/${movieInfo?.poster_path}`;
   const movieInfoToFavorite = {
     id: movieInfo?.id,
     title: movieInfo?.title,
@@ -53,13 +59,6 @@ export function SelectedMovie() {
     vote_count: movieInfo?.vote_count,
     popularity: movieInfo?.popularity,
   } as MovieDTO;
-
-  const theme = useTheme();
-  const route = useRoute();
-  const dispatch = useAppDispatch();
-  const { selectedMovieId } = route.params as SelectedMovieParams;
-  const insets = useSafeAreaInsets();
-  const navigation = useNavigation<AppNavigationRoutesProps>();
 
   const favoritedMovies = useAppSelector((state) => {
     return state.movies.favoritedMovies;
@@ -158,16 +157,15 @@ export function SelectedMovie() {
         <ScrollView>
           <Image
             source={{
-              uri: `https://image.tmdb.org/t/p/w500/${movieInfo?.poster_path}`,
+              uri: finalUri,
             }}
-            resizeMode="stretch"
           />
           <Header style={{ top: Math.max(insets.top, 16) }}>
-            <IconContainer onPress={onGoBack} activeOpacity={0.7}>
-              <ArrowLeft color={theme.colors.white} size={24} />
+            <IconContainer onPress={onGoBack}>
+              <GoBackIcon />
             </IconContainer>
-            <IconContainer onPress={handleFavoriteMovie} activeOpacity={0.7}>
-              <StarIcon favorited={favorited} size={32} />
+            <IconContainer onPress={handleFavoriteMovie}>
+              <StarIcon favorited={favorited} />
             </IconContainer>
           </Header>
 

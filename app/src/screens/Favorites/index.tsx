@@ -1,12 +1,17 @@
 import { useCallback } from 'react';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { Star, ThumbsUp, Trash } from 'phosphor-react-native';
 import { Alert, TouchableOpacity, FlatList } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 
 import { Loading } from '@components/Loading';
 import { useTheme } from 'styled-components/native';
+import { useAppDispatch, useAppSelector } from '@redux/store';
+import {
+  fetchFavorites,
+  removeAllFavoriteMovies,
+  removeFavoriteMovie,
+} from '@redux/slices/moviesSlice';
 
 import { AppNavigationRoutesProps } from '@routes/app.routes';
 import Route from '@routes/enums';
@@ -28,13 +33,6 @@ import {
   VotesContainer,
   VotesText,
 } from './styles';
-
-import { useAppDispatch, useAppSelector } from '../../redux/store';
-import {
-  fetchFavorites,
-  removeAllFavoriteMovies,
-  removeFavoriteMovie,
-} from '../../redux/slices/moviesSlice';
 
 export function Favorites() {
   const theme = useTheme();

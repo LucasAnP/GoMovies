@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { Star, ThumbsUp } from 'phosphor-react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { RefreshControl } from 'react-native';
 
@@ -22,19 +21,22 @@ import {
   Overview,
   PaginationLoading,
   PictureAndInfo,
+  PopularityContainer,
+  PopularityIcon,
+  StarIcon,
   Title,
   VotesContainer,
   VotesText,
 } from './styles';
 
 export function Movies() {
+  const { colors } = useTheme();
+
   const [movies, setMovies] = useState<MovieDTO[]>([]);
   const [pagination, setPagination] = useState(1);
   const [refreshing, setRefreshing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const navigation = useNavigation<AppNavigationRoutesProps>();
-
-  const theme = useTheme();
 
   const getMovies = async (currentPagination: number) => {
     setPagination(currentPagination);
@@ -88,13 +90,9 @@ export function Movies() {
             <RefreshControl
               refreshing={refreshing}
               onRefresh={onRefresh}
-              tintColor={theme.colors.red[700]}
-              titleColor={theme.colors.red[700]}
-              colors={[
-                theme.colors.red[700],
-                theme.colors.red[400],
-                theme.colors.gray[700],
-              ]}
+              tintColor={colors.red[700]}
+              titleColor={colors.red[700]}
+              colors={[colors.gray[700], colors.red[400], colors.gray[700]]}
             />
           }
           showsVerticalScrollIndicator={false}
@@ -124,20 +122,16 @@ export function Movies() {
                   <MovieInfo>
                     <MovieTitle>{item?.title}</MovieTitle>
                     <Overview numberOfLines={3}>{item?.overview}</Overview>
-                    <VotesContainer>
-                      <ThumbsUp
-                        color={theme.colors.gray[100]}
-                        size={16}
-                        weight="bold"
-                      />
+                    <PopularityContainer>
+                      <PopularityIcon />
                       <VotesText>{item?.popularity}</VotesText>
-                    </VotesContainer>
-                    <VotesContainer>
-                      <Star color="yellow" size={16} weight="fill" />
-                      <VotesText>
-                        {item?.vote_average} ({item?.vote_count})
-                      </VotesText>
-                    </VotesContainer>
+                      <VotesContainer>
+                        <StarIcon />
+                        <VotesText>
+                          {item?.vote_average} ({item?.vote_count})
+                        </VotesText>
+                      </VotesContainer>
+                    </PopularityContainer>
                   </MovieInfo>
                 </PictureAndInfo>
               </MovieCard>

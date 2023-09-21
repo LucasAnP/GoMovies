@@ -20,7 +20,7 @@ export const Header = styled.View`
 `;
 
 export const Title = styled.Text`
-  font-size: ${({ theme }) => RFValue(theme.fontSizes.xl)}px;
+  font-size: ${({ theme }) => theme.sizes.xMedium}px;
   color: ${({ theme }) => theme.colors.gray[100]};
   font-weight: bold;
 `;
@@ -32,7 +32,7 @@ export const EmptyListContainer = styled.View`
 `;
 
 export const EmptyListTitle = styled.Text`
-  font-size: ${({ theme }) => theme.fontSizes.sm}px;
+  font-size: ${({ theme }) => theme.sizes.xRegular}px;
   color: ${({ theme }) => theme.colors.gray[300]};
 
   text-align: center;
