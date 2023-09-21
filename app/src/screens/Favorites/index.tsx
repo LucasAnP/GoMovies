@@ -31,6 +31,7 @@ import {
 import { useAppDispatch, useAppSelector } from '../../redux/store';
 import {
   fetchFavorites,
+  removeAllFavoriteMovies,
   removeFavoriteMovie,
 } from '../../redux/slices/moviesSlice';
 
@@ -71,7 +72,7 @@ export function Favorites() {
       'Are you sure to remove all movies from your favorite list?',
       [
         { text: 'no', style: 'cancel' },
-        { text: 'Yes', onPress: () => removeAllStoragedFavoriteMovies() },
+        { text: 'Yes', onPress: () => dispatch(removeAllFavoriteMovies()) },
       ],
     );
   };
