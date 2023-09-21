@@ -116,8 +116,6 @@ export function Movies() {
                     source={{
                       uri: `https://image.tmdb.org/t/p/original/${item.poster_path}`,
                     }}
-                    width={100}
-                    resizeMode="cover"
                   />
                   <MovieInfo>
                     <MovieTitle>{item?.title}</MovieTitle>

@@ -32,6 +32,7 @@ import {
   Overview,
   ScrollView,
   StarIcon,
+  TitleContainer,
 } from './styles';
 
 type SelectedMovieParams = {
@@ -155,22 +156,20 @@ export function SelectedMovie() {
         </Container>
       ) : (
         <ScrollView>
-          <Image
-            source={{
-              uri: finalUri,
-            }}
-          />
+          <Image source={{ uri: finalUri }} />
           <Header style={{ top: Math.max(insets.top, 16) }}>
             <IconContainer onPress={onGoBack}>
               <GoBackIcon />
             </IconContainer>
-            <IconContainer onPress={handleFavoriteMovie}>
-              <StarIcon favorited={favorited} />
-            </IconContainer>
           </Header>
 
           <MovieInfoContainer>
-            <MovieTitle>{movieInfo?.title}</MovieTitle>
+            <TitleContainer>
+              <MovieTitle>{movieInfo?.title}</MovieTitle>
+              <IconContainer onPress={handleFavoriteMovie}>
+                <StarIcon favorited={favorited} />
+              </IconContainer>
+            </TitleContainer>
             <MovieSubtitle>{movieInfo?.release_date}</MovieSubtitle>
             <Overview>{movieInfo?.overview}</Overview>
             <GenresContainer>

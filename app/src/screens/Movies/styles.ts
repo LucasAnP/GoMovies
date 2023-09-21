@@ -1,4 +1,5 @@
 import { Star, ThumbsUp } from 'phosphor-react-native';
+import { RFValue } from 'react-native-responsive-fontsize';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import styled, { css } from 'styled-components/native';
@@ -46,9 +47,11 @@ export const MovieInfo = styled.View`
   padding: ${({ theme }) => theme.sizes.medium}px;
 `;
 
-export const Image = styled.Image`
+export const Image = styled.Image.attrs(() => ({
+  width: RFValue(80),
+  resizeMode: 'contain',
+}))`
   height: 100%;
-
   border-top-left-radius: ${({ theme }) => theme.sizes.small}px;
   border-bottom-left-radius: ${({ theme }) => theme.sizes.small}px;
 `;

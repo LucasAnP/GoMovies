@@ -28,6 +28,7 @@ import {
   MovieTitle,
   Overview,
   PictureAndInfo,
+  PopularityIcon,
   Title,
   TrashContainer,
   VotesContainer,
@@ -40,11 +41,8 @@ export function Favorites() {
   const { favoritedMovies, isLoading } = useAppSelector((state) => {
     return state.movies;
   });
-
   const dispatch = useAppDispatch();
-
   const navigation = useNavigation<AppNavigationRoutesProps>();
-
   const fetchFavoritesMovies = async () => {
     await dispatch(fetchFavorites());
   };
@@ -107,7 +105,6 @@ export function Favorites() {
           )}
         </TouchableOpacity>
       </Header>
-      {/* TODO: Put loading here */}
 
       <FlatList
         data={favoritedMovies}
@@ -132,20 +129,14 @@ export function Favorites() {
             <PictureAndInfo>
               <Image
                 source={{
-                  uri: `https://image.tmdb.org/t/p/original/${item.poster_path}`,
+                  uri: `https://image.tmdb.org/t/p/w500/${item.poster_path}`,
                 }}
-                width={100}
-                resizeMode="cover"
               />
               <MovieInfo>
                 <MovieTitle>{item?.title}</MovieTitle>
                 <Overview numberOfLines={3}>{item?.overview}</Overview>
                 <VotesContainer>
-                  <ThumbsUp
-                    color={theme.colors.gray[100]}
-                    size={16}
-                    weight="bold"
-                  />
+                  <PopularityIcon />
                   <VotesText>{item?.popularity}</VotesText>
                 </VotesContainer>
                 <VotesContainer>
