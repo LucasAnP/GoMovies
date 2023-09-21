@@ -1,9 +1,8 @@
 import { useCallback } from 'react';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
-import { Alert, TouchableOpacity, FlatList } from 'react-native';
+import { Alert, FlatList } from 'react-native';
 
 import { Loading } from '@components/Loading';
-import { useTheme } from 'styled-components/native';
 import { useAppDispatch, useAppSelector } from '@redux/store';
 import {
   fetchFavorites,
@@ -27,8 +26,6 @@ import {
 } from './styles';
 
 export function Favorites() {
-  const theme = useTheme();
-
   const { favoritedMovies, isLoading } = useAppSelector((state) => {
     return state.movies;
   });
