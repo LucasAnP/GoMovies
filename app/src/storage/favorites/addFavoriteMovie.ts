@@ -18,4 +18,5 @@ export async function storageFavoriteMovie(movie: MovieDTO) {
 
   const storage = JSON.stringify([...storedMovies, movie]);
   await AsyncStorage.setItem(FAVORITE_STORAGE, storage);
+  return storage;
 }
