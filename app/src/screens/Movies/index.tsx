@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { Star, ThumbsUp } from 'phosphor-react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { RefreshControl } from 'react-native';
 
 import { useTheme } from 'styled-components/native';
 import { Loading } from '@components/Loading';
@@ -77,30 +78,42 @@ export function Movies() {
     <Container>
       <Title>Top Rated Movies</Title>
       {/* TODO: Make the list with best performance can usecallback */}
-      {isLoading && !movies ? (
+      {isLoading && movies.length === 0 ? (
         <Loading />
       ) : (
         <MoviesFlatList
           data={movies}
           keyExtractor={(_, index) => index.toString()}
           onEndReached={onEndReached}
-          refreshing={refreshing}
-          onRefresh={onRefresh}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={onRefresh}
+              tintColor={theme.colors.red[700]}
+              titleColor={theme.colors.red[700]}
+              colors={[
+                theme.colors.red[700],
+                theme.colors.red[400],
+                theme.colors.gray[700],
+              ]}
+            />
+          }
           showsVerticalScrollIndicator={false}
           ListFooterComponent={
-            <PaginationLoading>
-              <Loading />
-            </PaginationLoading>
+            movies.length > 0 ? (
+              <PaginationLoading>
+                <Loading />
+              </PaginationLoading>
+            ) : (
+              <></>
+            )
           }
           renderItem={({ item }) => (
             <SafeAreaView
               style={{ flex: 1, paddingBottom: 16 }}
               edges={['right', 'left']}
             >
-              <MovieCard
-                activeOpacity={0.9}
-                onPress={() => onPressMovie(item.id)}
-              >
+              <MovieCard onPress={() => onPressMovie(item.id)}>
                 <PictureAndInfo>
                   <Image
                     source={{

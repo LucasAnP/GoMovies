@@ -12,6 +12,7 @@ export default {
       100: '#E1E1E6',
     },
     white: '#FFFFFF',
+    yellow: '#ffd400',
     red: {
       400: '#ff5757',
       700: '#e43236',

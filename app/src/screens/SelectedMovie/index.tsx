@@ -9,11 +9,13 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ArrowLeft } from 'phosphor-react-native';
 
 import { Loading } from '@components/Loading';
+import { useTheme } from 'styled-components/native';
 
 import { api } from '@services/api';
 import { SelectedMovieDTO } from '@dtos/SelectedMovieDTO';
 import { AppNavigationRoutesProps } from '@routes/app.routes';
 import { MovieDTO } from '@dtos/MovieDTO';
+import { removeStoragedMovie } from '@storage/favorites/removeStoragedFavoriteMovies';
 
 import {
   Container,
@@ -31,8 +33,11 @@ import {
   StarIcon,
 } from './styles';
 
-import { useAppDispatch } from '../../redux/store';
-import { addFavoriteMovie } from '../../redux/slices/moviesSlice';
+import { useAppDispatch, useAppSelector } from '../../redux/store';
+import {
+  addFavoriteMovie,
+  fetchFavorites,
+} from '../../redux/slices/moviesSlice';
 
 type SelectedMovieParams = {
   id: number;
@@ -52,6 +57,7 @@ export function SelectedMovie() {
     popularity: movieInfo?.popularity,
   } as MovieDTO;
 
+  const theme = useTheme();
   const route = useRoute();
   const dispatch = useAppDispatch();
   const { id } = route.params as SelectedMovieParams;
@@ -76,7 +82,6 @@ export function SelectedMovie() {
     setMovieInfo(undefined);
     navigation.goBack();
   };
-
   //TODO: check if movie is on favorites and make the star active
 
   const favoriteMovie = () => {
@@ -91,12 +96,34 @@ export function SelectedMovie() {
     }
   };
 
+  const unfavoriteMovie = () => {
+    removeStoragedMovie(movieInfoToFavorite);
+  };
+
   const handleFavoriteMovie = () => {
-    setFavorited((prevState) => !prevState);
-    Alert.alert('Favorite', 'Are you sure to favorite this movie?', [
-      { text: 'no', style: 'cancel' },
-      { text: 'Yes', onPress: () => favoriteMovie() },
-    ]);
+    if (favorited) {
+      Alert.alert('Unfavorite', 'Are you sure to unfavorite this movie?', [
+        { text: 'no', style: 'cancel' },
+        {
+          text: 'Yes',
+          onPress: () => {
+            setFavorited((prevState) => !prevState);
+            unfavoriteMovie();
+          },
+        },
+      ]);
+    } else {
+      Alert.alert('Favorite', 'Are you sure to favorite this movie?', [
+        { text: 'no', style: 'cancel' },
+        {
+          text: 'Yes',
+          onPress: () => {
+            setFavorited((prevState) => !prevState);
+            favoriteMovie();
+          },
+        },
+      ]);
+    }
   };
 
   useFocusEffect(
@@ -121,10 +148,10 @@ export function SelectedMovie() {
           />
           <Header style={{ top: Math.max(insets.top, 16) }}>
             <IconContainer onPress={onGoBack} activeOpacity={0.7}>
-              <ArrowLeft color="white" size={24} />
+              <ArrowLeft color={theme.colors.white} size={24} />
             </IconContainer>
             <IconContainer onPress={handleFavoriteMovie} activeOpacity={0.7}>
-              <StarIcon favorited={favorited} size={24} />
+              <StarIcon favorited={favorited} size={32} />
             </IconContainer>
           </Header>
 

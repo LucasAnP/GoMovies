@@ -26,19 +26,22 @@ export const Header = styled.View`
   position: absolute;
   flex-direction: row;
 
-  padding: 16px;
+  padding: 0 16px;
   align-items: center;
   justify-content: space-between;
 `;
 export const StarIcon = styled(Star).attrs<StarIconProps>(
   ({ favorited, theme }) => ({
-    color: favorited ? 'yellow' : theme.colors.white,
-    weight: favorited ? 'fill' : 'bold',
+    color: favorited ? theme.colors.yellow : theme.colors.gray[100],
+    weight: favorited ? 'fill' : 'duotone',
   }),
 )``;
 
 export const IconContainer = styled.TouchableOpacity`
   height: 100%;
+
+  align-items: center;
+  justify-content: center;
 `;
 
 export const Image = styled.Image`
