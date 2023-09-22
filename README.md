@@ -30,7 +30,10 @@
 
 ### Getting Started
 
-> You must have installed npx to run expo projects.
+
+>  You can download the [RELEASE VERSION (APK)](https://drive.google.com/file/d/1KBG8K4dDp2i0_YjjO7bXp3w8Og_OMntj/view?usp=drive_link) and use in your Android Device.
+
+>  Or you can run the app, but must have installed npx to run expo projects.
 
 Clone the project repository
 
