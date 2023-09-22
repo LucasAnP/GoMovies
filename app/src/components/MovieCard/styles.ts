@@ -1,4 +1,4 @@
-import { Heart, Star, ThumbsUp, Trash } from 'phosphor-react-native';
+import { Star, ThumbsUp, Trash } from 'phosphor-react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 
 import styled, { css } from 'styled-components/native';
@@ -110,7 +110,7 @@ export const TrashContainer = styled.TouchableOpacity.attrs(() => ({
   background-color: ${({ theme }) => theme.colors.gray[700]};
 `;
 
-export const RemoveIcon = styled(Heart).attrs(({ theme }) => ({
+export const RemoveIcon = styled(Trash).attrs(({ theme }) => ({
   size: theme.sizes.medium,
   color: theme.colors.red[400],
   weight: 'fill',

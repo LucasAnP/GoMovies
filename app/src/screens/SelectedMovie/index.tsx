@@ -8,7 +8,7 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Loading } from '@components/Loading';
-import { addFavoriteMovie } from '@redux/slices/moviesSlice';
+import { addFavoriteMovie, fetchFavorites } from '@redux/slices/moviesSlice';
 import { useAppDispatch, useAppSelector } from '@redux/store';
 
 import { api } from '@services/api';
@@ -88,6 +88,7 @@ export function SelectedMovie() {
   const favoriteMovie = () => {
     try {
       dispatch(addFavoriteMovie(movieInfoToFavorite));
+      setFavorited((prevState) => !prevState);
     } catch (error) {
       let errorMessage = 'Failed to favorite movie';
       if (error instanceof Error) {
@@ -99,6 +100,7 @@ export function SelectedMovie() {
 
   const unfavoriteMovie = () => {
     removeStoragedMovie(movieInfoToFavorite);
+    setFavorited((prevState) => !prevState);
   };
 
   const handleFavoriteMovie = () => {
@@ -108,7 +110,6 @@ export function SelectedMovie() {
         {
           text: 'Yes',
           onPress: () => {
-            setFavorited((prevState) => !prevState);
             unfavoriteMovie();
           },
         },
@@ -119,7 +120,6 @@ export function SelectedMovie() {
         {
           text: 'Yes',
           onPress: () => {
-            setFavorited((prevState) => !prevState);
             favoriteMovie();
           },
         },
@@ -128,19 +128,18 @@ export function SelectedMovie() {
   };
 
   const checkIfMovieIsFavorited = () => {
+    setFavorited(false);
     const filteredEqualSelectedMovie = favoritedMovies.filter(
       (movieInside) => movieInside.id === selectedMovieId,
     );
     if (filteredEqualSelectedMovie.length > 0) {
       setFavorited(true);
-    } else {
-      setFavorited(false);
     }
   };
 
   useLayoutEffect(() => {
     checkIfMovieIsFavorited();
-  }, [selectedMovieId]);
+  }, [favoritedMovies, selectedMovieId]);
 
   useFocusEffect(
     useCallback(() => {
