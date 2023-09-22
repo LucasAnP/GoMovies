@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
-import { Alert, FlatList } from 'react-native';
+import { Alert, FlatList, RefreshControl } from 'react-native';
 import { Swipeable } from 'react-native-gesture-handler';
 
 import { Loading } from '@components/Loading';
@@ -11,6 +11,7 @@ import {
   removeFavoriteMovie,
 } from '@redux/slices/moviesSlice';
 import { MovieCard } from '@components/MovieCard';
+import { useTheme } from 'styled-components/native';
 
 import { AppNavigationRoutesProps } from '@routes/app.routes';
 import Route from '@routes/enums';
@@ -31,6 +32,7 @@ export function Favorites() {
   const { favoritedMovies, isLoading } = useAppSelector((state) => {
     return state.movies;
   });
+  const { colors } = useTheme();
   const dispatch = useAppDispatch();
   const navigation = useNavigation<AppNavigationRoutesProps>();
   const fetchFavoritesMovies = async () => {
@@ -74,7 +76,7 @@ export function Favorites() {
     }, []),
   );
 
-  if (isLoading) {
+  if (isLoading && !favoritedMovies) {
     return (
       <Container>
         <Loading />
@@ -98,6 +100,18 @@ export function Favorites() {
         data={favoritedMovies}
         keyExtractor={(_, index) => index.toString()}
         showsVerticalScrollIndicator={false}
+        refreshControl={
+          favoritedMovies.length > 0 ? (
+            <RefreshControl
+              refreshing={isLoading}
+              tintColor={colors.red[700]}
+              titleColor={colors.red[700]}
+              colors={[colors.gray[700], colors.red[400], colors.gray[700]]}
+            />
+          ) : (
+            <></>
+          )
+        }
         contentContainerStyle={[
           favoritedMovies?.length === 0 && {
             flex: 1,

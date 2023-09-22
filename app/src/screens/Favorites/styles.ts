@@ -7,7 +7,19 @@ import styled, { css } from 'styled-components/native';
 export const Container = styled(SafeAreaView)`
   flex: 1;
   background-color: ${({ theme }) => theme.colors.gray[700]};
-  padding: 16px 16px 0;
+  padding: ${({ theme }) => theme.sizes.medium}px
+    ${({ theme }) => theme.sizes.medium}px 0;
+`;
+
+export const AbsoluteContainer = styled.View`
+  padding: ${({ theme }) => theme.sizes.medium}px
+    ${({ theme }) => theme.sizes.medium}px 0;
+
+  margin-bottom: ${({ theme }) => theme.sizes.xLarge}px;
+
+  position: absolute;
+  bottom: 0;
+  align-self: center;
 `;
 
 export const Header = styled.View`
@@ -65,17 +77,7 @@ export const SwipeableRemove = styled.View`
   width: ${RFValue(90)}px;
   height: 100%;
 
-  border-radius: 6px;
   background-color: ${({ theme }) => theme.colors.gray[700]};
   align-items: center;
   justify-content: center;
-`;
-
-export const SwipeableContainer = styled.View`
-  width: 100%;
-  height: ${RFValue(90)}px;
-  margin-bottom: 12px;
-
-  background-color: ${({ theme }) => theme.colors.red[700]};
-  border-radius: 6px;
 `;
