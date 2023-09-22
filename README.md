@@ -13,12 +13,12 @@
 - When pressing any card, navigate to a screen with more information about the movie
 - It's possible to favorite each movie that you like
 - You can see your favorite movies by pressing the "Star Button" in the bottom tab
-- You can delete each movie or delete them all in one time.
+- You can delete each movie or delete them all in one time. (You can delete pressing the button or dragging the card to right)
 
 ## 🚀 Technologies used
 
 - [React Native](https://reactnative.dev/)
-- [Expo]([https://reactnative.dev/](https://expo.dev/accounts/niubajr19))
+- [Expo](<[https://reactnative.dev/](https://expo.dev/accounts/niubajr19)>)
 - [Typescript](https://www.typescriptlang.org)
 - [Styled Components](https://styled-components.com/)
 - [Redux Toolkit](https://redux.js.org/)
@@ -33,8 +33,8 @@
 > You must have installed npx to run expo projects.
 
 Clone the project repository
-> [https://github.com/LucasAnP/GoMovies](https://github.com/LucasAnP/GoMovies)
 
+> [https://github.com/LucasAnP/GoMovies](https://github.com/LucasAnP/GoMovies)
 
 Access the project directory
 
@@ -58,9 +58,8 @@ Start the APP
 npx expo start
 ```
 
-
 ## 📄 License
 
 [MIT LICENSE](https://opensource.org/license/mit/)
 
-  > This is a challenge by OTO
+> This is a challenge by OTO

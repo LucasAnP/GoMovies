@@ -8,7 +8,7 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Loading } from '@components/Loading';
-import { addFavoriteMovie, fetchFavorites } from '@redux/slices/moviesSlice';
+import { addFavoriteMovie } from '@redux/slices/moviesSlice';
 import { useAppDispatch, useAppSelector } from '@redux/store';
 
 import { api } from '@services/api';
@@ -19,20 +19,20 @@ import { removeStoragedMovie } from '@storage/favorites/removeStoragedFavoriteMo
 
 import {
   Container,
-  Genres,
-  GenresContainer,
-  GenresText,
+  ScrollView,
   GoBackIcon,
+  StarIcon,
   Header,
   IconContainer,
   Image,
-  MovieInfoContainer,
-  MovieSubtitle,
-  MovieTitle,
-  Overview,
-  ScrollView,
-  StarIcon,
   TitleContainer,
+  MovieTitle,
+  MovieSubtitle,
+  MovieInfoContainer,
+  Overview,
+  GenresContainer,
+  Genres,
+  GenresText,
 } from './styles';
 
 type SelectedMovieParams = {

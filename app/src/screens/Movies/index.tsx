@@ -82,7 +82,6 @@ export function Movies() {
           showsVerticalScrollIndicator={false}
           ListFooterComponent={
             movies.length > 0 ? (
-              // TODO: Create Component
               <PaginationLoading>
                 <Loading />
               </PaginationLoading>
