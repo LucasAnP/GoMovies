@@ -1,7 +1,10 @@
-<div align="center" style="padding-bottom:30px; background:transparent">
+<div align="center">
   <img src ="./app/src/assets/app-screenshot.jpeg" style="background:transparent" height="500" />
   <img src ="./app/src/assets/app-screenshot-2.jpeg" style="background:transparent" height="500" />
 </div>
+
+---
+&nbsp;
 
 ## 💻 Project - Go Movies
 
@@ -13,7 +16,7 @@
 - When pressing any card, navigate to a screen with more information about the movie
 - It's possible to favorite each movie that you like
 - You can see your favorite movies by pressing the "Star Button" in the bottom tab
-- You can delete each movie or delete them all in one time. (You can delete pressing the button or dragging the card to right)
+- You can delete each movie or delete them all in one time. (You can delete by pressing the button or dragging the card to the right)
 
 ## 🚀 Technologies used
 
@@ -28,7 +31,7 @@
 - [Eslint](https://eslint.org/) [Prettier](https://prettier.io/)
 - [.env files](https://www.npmjs.com/package/react-native-dotenv)
 
-### Getting Started
+## Getting Started
 
 
 >  You can download the [RELEASE VERSION (APK)](https://drive.google.com/file/d/1KBG8K4dDp2i0_YjjO7bXp3w8Og_OMntj/view?usp=drive_link) and use in your Android Device.
@@ -60,6 +63,15 @@ Start the APP
 ```
 npx expo start
 ```
+
+Run the app in devices
+
+```
+To run the project, you may have installed expo go app. You can scan the QR Code and start.
+```
+
+> If you want, you can active USB Debugging at [developer mode](https://developer.android.com/studio/debug/dev-options?hl=pt-br), 
+plug a WSB cable and Press "A" Button to expo start the application on your device.
 
 ## 📄 License
 
