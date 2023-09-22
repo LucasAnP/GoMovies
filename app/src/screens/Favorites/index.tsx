@@ -1,6 +1,7 @@
 import { useCallback } from 'react';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { Alert, FlatList } from 'react-native';
+import { Swipeable } from 'react-native-gesture-handler';
 
 import { Loading } from '@components/Loading';
 import { useAppDispatch, useAppSelector } from '@redux/store';
@@ -21,6 +22,7 @@ import {
   EmptyListTitle,
   Header,
   RemoveButton,
+  SwipeableRemove,
   Title,
   TrashIcon,
 } from './styles';
@@ -96,12 +98,12 @@ export function Favorites() {
         data={favoritedMovies}
         keyExtractor={(_, index) => index.toString()}
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={
+        contentContainerStyle={[
           favoritedMovies?.length === 0 && {
             flex: 1,
             justifyContent: 'center',
-          }
-        }
+          },
+        ]}
         ListEmptyComponent={() => (
           <EmptyListContainer>
             <EmptyListTitle>
@@ -110,12 +112,26 @@ export function Favorites() {
             </EmptyListTitle>
           </EmptyListContainer>
         )}
+        //
         renderItem={({ item }) => (
-          <MovieCard
-            item={item}
-            onPress={() => onPressMovie(item.id)}
-            removeFunction={() => handleRemoveFavorite(item)}
-          />
+          <Swipeable
+            key={item.id}
+            leftThreshold={10}
+            onSwipeableOpen={() => {
+              handleRemoveFavorite(item);
+            }}
+            renderLeftActions={() => (
+              <SwipeableRemove>
+                <TrashIcon />
+              </SwipeableRemove>
+            )}
+          >
+            <MovieCard
+              item={item}
+              onPress={() => onPressMovie(item.id)}
+              removeFunction={() => handleRemoveFavorite(item)}
+            />
+          </Swipeable>
         )}
       />
     </Container>

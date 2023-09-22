@@ -9,11 +9,11 @@ import { AppRoutes } from './app.routes';
 export default function Routes() {
   const theme = useTheme();
   return (
-    <NavigationContainer>
-      <StatusBar style="light" backgroundColor="transparent" translucent />
-      <View style={{ flex: 1, backgroundColor: theme.colors.gray[700] }}>
+    <View style={{ flex: 1, backgroundColor: theme.colors.gray[700] }}>
+      <NavigationContainer>
+        <StatusBar style="light" backgroundColor="transparent" translucent />
         <AppRoutes />
-      </View>
-    </NavigationContainer>
+      </NavigationContainer>
+    </View>
   );
 }

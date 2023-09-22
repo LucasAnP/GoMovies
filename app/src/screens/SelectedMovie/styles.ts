@@ -47,6 +47,7 @@ export const Header = styled.View`
 export const IconContainer = styled.TouchableOpacity.attrs(() => ({
   activeOpacity: 0.7,
 }))`
+  flex: 0.3;
   align-items: center;
   justify-content: center;
 `;
@@ -71,6 +72,8 @@ export const TitleContainer = styled.View`
 `;
 
 export const MovieTitle = styled.Text`
+  flex: 1;
+
   font-weight: bold;
   font-size: ${({ theme }) => theme.sizes.xMedium}px;
   color: ${({ theme }) => theme.colors.white};

@@ -1,4 +1,5 @@
 import { Trash } from 'phosphor-react-native';
+import { RFValue } from 'react-native-responsive-fontsize';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import styled, { css } from 'styled-components/native';
@@ -23,13 +24,11 @@ export const RemoveButton = styled.TouchableOpacity.attrs(() => ({
   activeOpacity: 0.7,
 }))`
   padding: ${({ theme }) => theme.sizes.smallest}px;
-  background-color: ${({ theme }) => theme.colors.gray[400]};
-  border-radius: 9999px;
 `;
 
 export const TrashIcon = styled(Trash).attrs(({ theme }) => ({
   size: theme.sizes.large,
-  color: theme.colors.red[700],
+  color: theme.colors.red[400],
   weight: 'light',
 }))``;
 
@@ -60,4 +59,23 @@ export const MovieCard = styled.TouchableOpacity`
     border-radius: ${theme.sizes.small}px;
     margin-bottom: ${theme.sizes.medium}px;
   `}
+`;
+
+export const SwipeableRemove = styled.View`
+  width: ${RFValue(90)}px;
+  height: 100%;
+
+  border-radius: 6px;
+  background-color: ${({ theme }) => theme.colors.gray[700]};
+  align-items: center;
+  justify-content: center;
+`;
+
+export const SwipeableContainer = styled.View`
+  width: 100%;
+  height: ${RFValue(90)}px;
+  margin-bottom: 12px;
+
+  background-color: ${({ theme }) => theme.colors.red[700]};
+  border-radius: 6px;
 `;

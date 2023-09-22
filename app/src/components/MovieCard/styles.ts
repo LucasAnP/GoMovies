@@ -107,7 +107,7 @@ export const TrashContainer = styled.TouchableOpacity.attrs(() => ({
   padding: 4px;
   border-radius: 999px;
 
-  background-color: ${({ theme }) => theme.colors.gray[700]};
+  background-color: ${({ theme }) => theme.colors.gray[400]};
 `;
 
 export const RemoveIcon = styled(Trash).attrs(({ theme }) => ({
