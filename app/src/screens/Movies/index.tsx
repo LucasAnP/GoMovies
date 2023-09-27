@@ -90,7 +90,11 @@ export function Movies() {
             )
           }
           renderItem={({ item }) => (
-            <MovieCard item={item} onPress={() => onPressMovie(item.id)} />
+            <MovieCard
+              item={item}
+              onPress={() => onPressMovie(item.id)}
+              testID="movie-details-button"
+            />
           )}
         />
       )}

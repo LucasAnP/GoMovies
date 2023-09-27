@@ -1,4 +1,5 @@
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { TouchableOpacityProps } from 'react-native';
 
 import { MovieDTO } from '@dtos/MovieDTO';
 
@@ -13,25 +14,33 @@ import {
   PopularityIcon,
   RemoveIcon,
   StarIcon,
-  StarRemoveIcon,
   TrashContainer,
   VotesContainer,
   VotesText,
 } from './styles';
 
-interface MovieCardProps {
+interface MovieCardProps extends TouchableOpacityProps {
   onPress: () => void;
   item: MovieDTO;
   removeFunction?: () => void;
 }
 
-export function MovieCard({ onPress, item, removeFunction }: MovieCardProps) {
+export function MovieCard({
+  onPress,
+  item,
+  removeFunction,
+  ...rest
+}: MovieCardProps) {
   return (
     <SafeAreaView
       style={{ flex: 1, paddingBottom: 16 }}
       edges={['right', 'left']}
     >
-      <MovieCardContainer onPress={onPress}>
+      <MovieCardContainer
+        onPress={onPress}
+        testID="movie-details-button"
+        {...rest}
+      >
         <PictureAndInfo>
           <Image
             source={{
